@@ -25,6 +25,15 @@ class ChatsViewController: UIViewController {
   private func setupNavigation() {
     title = "Chats"
     navigationController?.navigationBar.prefersLargeTitles = true
+    navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose,
+                                                        target: self,
+                                                        action: #selector(didTapCompose))
+  }
+  
+  @objc private func didTapCompose() {
+    let newConversationVC = NewConversationViewController()
+    let navigationVC = UINavigationController(rootViewController: newConversationVC)
+    present(navigationVC, animated: true)
   }
   
   private func setupTableView() {
@@ -49,5 +58,13 @@ extension ChatsViewController: UITableViewDataSource {
 }
 
 extension ChatsViewController: UITableViewDelegate {
-  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    
+    let chatsWithPersonVC = ChatWithPersonViewController()
+    
+    chatsWithPersonVC.title = "Yan"
+    chatsWithPersonVC.navigationItem.largeTitleDisplayMode = .never
+    navigationController?.pushViewController(chatsWithPersonVC, animated: true)
+  }
 }

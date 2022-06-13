@@ -28,6 +28,10 @@
 		133948072853761C002A4BA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133948062853761C002A4BA3 /* AppDelegate.swift */; };
 		1339480C28537A09002A4BA3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1339480B28537A09002A4BA3 /* GoogleService-Info.plist */; };
 		1339480E2853B3AA002A4BA3 /* ChatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339480D2853B3AA002A4BA3 /* ChatsTableViewCell.swift */; };
+		13E4259728576DFE00D9CB6D /* ChatWithPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259628576DFE00D9CB6D /* ChatWithPersonView.swift */; };
+		13E4259928576E2100D9CB6D /* ChatWithPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259828576E2100D9CB6D /* ChatWithPersonViewController.swift */; };
+		13E4259B2857726300D9CB6D /* ChatWithPersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259A2857726300D9CB6D /* ChatWithPersonModel.swift */; };
+		13E4259E2857863E00D9CB6D /* NewConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259D2857863E00D9CB6D /* NewConversationView.swift */; };
 		A3875EFC9C83E5672C7208DF /* Pods_Messenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255E793EB61A6CE894B535CA /* Pods_Messenger.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +59,10 @@
 		133948062853761C002A4BA3 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "../../../../Users/victorvieira/Downloads/Messenger-main/Messenger/AppDelegate.swift"; sourceTree = "<group>"; };
 		1339480B28537A09002A4BA3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1339480D2853B3AA002A4BA3 /* ChatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTableViewCell.swift; sourceTree = "<group>"; };
+		13E4259628576DFE00D9CB6D /* ChatWithPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWithPersonView.swift; sourceTree = "<group>"; };
+		13E4259828576E2100D9CB6D /* ChatWithPersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWithPersonViewController.swift; sourceTree = "<group>"; };
+		13E4259A2857726300D9CB6D /* ChatWithPersonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWithPersonModel.swift; sourceTree = "<group>"; };
+		13E4259D2857863E00D9CB6D /* NewConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationView.swift; sourceTree = "<group>"; };
 		255E793EB61A6CE894B535CA /* Pods_Messenger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Messenger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		51E09411765D6A6E3D64F485 /* Pods-Messenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.release.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.release.xcconfig"; sourceTree = "<group>"; };
 		FCF1856483573EB7090BD5D7 /* Pods-Messenger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.debug.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.debug.xcconfig"; sourceTree = "<group>"; };
@@ -112,7 +120,6 @@
 			children = (
 				1303E336283BC860005BE248 /* PhotoViewerViewController.swift */,
 				1303E338283BC874005BE248 /* VideoPlayerViewController.swift */,
-				1303E33A283BC888005BE248 /* NewConversationViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -131,6 +138,7 @@
 				133947F6285374BE002A4BA3 /* ChatsView.swift */,
 				133947F8285374C7002A4BA3 /* ChatsViewController.swift */,
 				1339480D2853B3AA002A4BA3 /* ChatsTableViewCell.swift */,
+				13E4259528576D2C00D9CB6D /* ChatWithPerson */,
 			);
 			path = Chats;
 			sourceTree = "<group>";
@@ -151,6 +159,7 @@
 				133947F4285374AA002A4BA3 /* ConversationsViewController.swift */,
 				133948082853764D002A4BA3 /* Chats */,
 				13394809285376F7002A4BA3 /* Profile */,
+				13E4259C285785E900D9CB6D /* NewConversation */,
 			);
 			path = Conversations;
 			sourceTree = "<group>";
@@ -181,6 +190,25 @@
 				1339480428537592002A4BA3 /* LoginViewController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		13E4259528576D2C00D9CB6D /* ChatWithPerson */ = {
+			isa = PBXGroup;
+			children = (
+				13E4259A2857726300D9CB6D /* ChatWithPersonModel.swift */,
+				13E4259628576DFE00D9CB6D /* ChatWithPersonView.swift */,
+				13E4259828576E2100D9CB6D /* ChatWithPersonViewController.swift */,
+			);
+			path = ChatWithPerson;
+			sourceTree = "<group>";
+		};
+		13E4259C285785E900D9CB6D /* NewConversation */ = {
+			isa = PBXGroup;
+			children = (
+				13E4259D2857863E00D9CB6D /* NewConversationView.swift */,
+				1303E33A283BC888005BE248 /* NewConversationViewController.swift */,
+			);
+			path = NewConversation;
 			sourceTree = "<group>";
 		};
 		3A1DDCEB2256CEE3BB3A4785 /* Frameworks */ = {
@@ -318,6 +346,7 @@
 				1303E33B283BC888005BE248 /* NewConversationViewController.swift in Sources */,
 				133947F32853749B002A4BA3 /* ConversationsView.swift in Sources */,
 				133947F9285374C7002A4BA3 /* ChatsViewController.swift in Sources */,
+				13E4259728576DFE00D9CB6D /* ChatWithPersonView.swift in Sources */,
 				133947FD28537506002A4BA3 /* ProfileViewController.swift in Sources */,
 				1303E339283BC874005BE248 /* VideoPlayerViewController.swift in Sources */,
 				133947FB285374FA002A4BA3 /* ProfileView.swift in Sources */,
@@ -325,7 +354,10 @@
 				133947EC285373B9002A4BA3 /* MessengerModel.swift in Sources */,
 				1303E320283BC2FF005BE248 /* SceneDelegate.swift in Sources */,
 				133947F7285374BE002A4BA3 /* ChatsView.swift in Sources */,
+				13E4259928576E2100D9CB6D /* ChatWithPersonViewController.swift in Sources */,
 				1339480128537537002A4BA3 /* RegisterViewController.swift in Sources */,
+				13E4259B2857726300D9CB6D /* ChatWithPersonModel.swift in Sources */,
+				13E4259E2857863E00D9CB6D /* NewConversationView.swift in Sources */,
 				133947FF2853752F002A4BA3 /* RegisterView.swift in Sources */,
 				1339480528537592002A4BA3 /* LoginViewController.swift in Sources */,
 				1339480E2853B3AA002A4BA3 /* ChatsTableViewCell.swift in Sources */,
