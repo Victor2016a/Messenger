@@ -12,6 +12,7 @@ pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod 'Firebase/Analytics', '8.1.0'
+pod 'Firebase/Storage'
 
 # Facebook
 pod 'FBSDKLoginKit'
