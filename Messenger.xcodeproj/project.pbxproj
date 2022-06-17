@@ -13,6 +13,7 @@
 		1303E337283BC860005BE248 /* PhotoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1303E336283BC860005BE248 /* PhotoViewerViewController.swift */; };
 		1303E339283BC874005BE248 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1303E338283BC874005BE248 /* VideoPlayerViewController.swift */; };
 		1303E33B283BC888005BE248 /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1303E33A283BC888005BE248 /* NewConversationViewController.swift */; };
+		13267C2F285A198700A02FFE /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13267C2E285A198700A02FFE /* StorageManager.swift */; };
 		133947EC285373B9002A4BA3 /* MessengerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947EB285373B9002A4BA3 /* MessengerModel.swift */; };
 		133947EE28537456002A4BA3 /* DataBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947ED28537456002A4BA3 /* DataBaseManager.swift */; };
 		133947F32853749B002A4BA3 /* ConversationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947F22853749B002A4BA3 /* ConversationsView.swift */; };
@@ -44,6 +45,7 @@
 		1303E336283BC860005BE248 /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
 		1303E338283BC874005BE248 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		1303E33A283BC888005BE248 /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
+		13267C2E285A198700A02FFE /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		133947EB285373B9002A4BA3 /* MessengerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessengerModel.swift; sourceTree = "<group>"; };
 		133947ED28537456002A4BA3 /* DataBaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBaseManager.swift; sourceTree = "<group>"; };
 		133947F22853749B002A4BA3 /* ConversationsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsView.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				133947ED28537456002A4BA3 /* DataBaseManager.swift */,
+				13267C2E285A198700A02FFE /* StorageManager.swift */,
 			);
 			path = DataBaseManager;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				1339480328537588002A4BA3 /* LoginView.swift in Sources */,
 				133948072853761C002A4BA3 /* AppDelegate.swift in Sources */,
 				133947EE28537456002A4BA3 /* DataBaseManager.swift in Sources */,
+				13267C2F285A198700A02FFE /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

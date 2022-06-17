@@ -28,10 +28,17 @@ extension DataBaseManager {
     }
   }
   
-  public func insertUser(with user: MessengerModel) {
+  public func insertUser(with user: MessengerModel, completion: @escaping (Bool) -> Void) {
     database.child(user.safeEmail).setValue([
       "firstName": user.firstName,
       "lastName": user.lastName
-    ])
+    ]) { error, _ in
+      guard error == nil else {
+        print("Failed to write to database")
+        completion(false)
+        return
+      }
+      completion(true)
+    }
   }
 }
