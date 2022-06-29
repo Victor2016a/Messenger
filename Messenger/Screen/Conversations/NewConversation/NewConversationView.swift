@@ -9,7 +9,7 @@ import UIKit
 import JGProgressHUD
 
 class NewConversationView: UIView {
-  let spineer = JGProgressHUD(style: .dark)
+  let spinner = JGProgressHUD(style: .dark)
   
   let searchBar: UISearchBar = {
     let searchBar = UISearchBar()
@@ -23,7 +23,7 @@ class NewConversationView: UIView {
     label.isHidden = true
     label.text = "No Results"
     label.textAlignment = .center
-    label.textColor = .green
+    label.textColor = .gray
     label.font = .systemFont(ofSize: 21, weight: .medium)
     return label
   }()

@@ -8,7 +8,7 @@
 import UIKit
 
 class ProfileView: UIView {
-  let tableView: UITableView = {
+  var tableView: UITableView = {
     let tableView = UITableView()
     tableView.translatesAutoresizingMaskIntoConstraints = false
     return tableView

@@ -11,7 +11,8 @@ import FBSDKLoginKit
 import GoogleSignIn
 
 class ProfileViewController: UIViewController {
-  let profileView = ProfileView()
+  var profileView = ProfileView()
+  var modelMessenger = [MessengerModel]()
   
   override func loadView() {
     super.loadView()
@@ -31,7 +32,12 @@ class ProfileViewController: UIViewController {
   }
   
   private func configureTableView() {
-    profileView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    
+    profileView.tableView.register(UITableViewCell.self,
+                                   forCellReuseIdentifier: "cell")
+    
+    profileView.tableView.register(ProfileHeaderTableView.self,
+                                   forHeaderFooterViewReuseIdentifier: ProfileHeaderTableView.identifier)
     
     profileView.tableView.dataSource = self
     profileView.tableView.delegate = self
@@ -88,5 +94,31 @@ extension ProfileViewController: UITableViewDelegate {
                                         style: .cancel))
     
     present(actionSheet, animated: true)
+  }
+  
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    guard let headerProfile = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderTableView.identifier) as? ProfileHeaderTableView else { return .init() }
+    
+    headerProfile.spinner.show(in: headerProfile)
+    
+    guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return .init()}
+    
+    let safeEmail = DataBaseManager.safeEmail(email: email)
+    let fileName = safeEmail + "_profile_picture.png"
+    let path = "images/" + fileName
+    
+    StorageManager.shared.downloadURL(for: path) { result in
+      switch result {
+      case .success(let url):
+        headerProfile.configure(url: url)
+      case .failure(let error):
+        print("Error \(error)")
+      }
+    }
+    return headerProfile
+  }
+  
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    200
   }
 }
