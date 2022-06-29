@@ -108,6 +108,83 @@ extension DataBaseManager {
                                     firstMessage: Message,
                                     completion: @escaping (Bool) -> Void){
     
+    guard let currentEmail = UserDefaults.standard.value(forKey: "email") as? String else { return }
+    
+    let safeEmail = DataBaseManager.safeEmail(email: currentEmail)
+    let reference = database.child(safeEmail)
+    
+    reference.observeSingleEvent(of: .value) { snapshot in
+      guard var userNode = snapshot.value as? [String: Any] else {
+        completion(false)
+        return
+      }
+      
+      let messageDate = firstMessage.sentDate
+      let dateString = ChatWithPersonViewController.dateFormatter.string(from: messageDate)
+      
+      var message = ""
+      
+      switch firstMessage.kind {
+      
+      case .text(let messageText):
+        message = messageText
+      case .attributedText(_):
+        break
+      case .photo(_):
+        break
+      case .video(_):
+        break
+      case .location(_):
+        break
+      case .emoji(_):
+        break
+      case .audio(_):
+        break
+      case .contact(_):
+        break
+      case .linkPreview(_):
+        break
+      case .custom(_):
+        break
+      }
+      
+      let newConversations: [String: Any] = [
+        "id": "Conversations_\(firstMessage.messageId)",
+        "other_user_email": otherUserEmail,
+        "latest_message": [
+          "date": dateString,
+          "message": message,
+          "is_read": false
+        ]
+      ]
+      
+      if var conversations = userNode["conversations"] as? [[String: Any]] {
+        
+        conversations.append(newConversations)
+        userNode["conversations"] = conversations
+        reference.setValue(userNode) { error, _ in
+          guard error == nil else {
+            completion(false)
+            return
+          }
+          
+          completion(true)
+        }
+        
+      } else {
+        
+        userNode["conversations"] = [newConversations]
+        
+        reference.setValue(userNode) { error, _ in
+          guard error == nil else {
+            completion(false)
+            return
+          }
+          
+          completion(true)
+        }
+      }
+    }
   }
   
   public func getAllConversations(for email: String,
