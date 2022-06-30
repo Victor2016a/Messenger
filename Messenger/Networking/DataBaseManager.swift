@@ -148,8 +148,12 @@ extension DataBaseManager {
         break
       }
       
+      var conversationId = "conversation_\(firstMessage.messageId)"
+      
+      conversationId = conversationId.replacingOccurrences(of: ".", with: "")
+      
       let newConversations: [String: Any] = [
-        "id": "Conversations_\(firstMessage.messageId)",
+        "id": conversationId,
         "other_user_email": otherUserEmail,
         "latest_message": [
           "date": dateString,
@@ -162,28 +166,95 @@ extension DataBaseManager {
         
         conversations.append(newConversations)
         userNode["conversations"] = conversations
-        reference.setValue(userNode) { error, _ in
+        reference.setValue(userNode) { [weak self] error, _ in
           guard error == nil else {
             completion(false)
             return
           }
           
-          completion(true)
+          self?.finishCreatingConversation(conversationID: conversationId,
+                                           firstMessage: firstMessage,
+                                           completion: completion)
         }
         
       } else {
         
         userNode["conversations"] = [newConversations]
         
-        reference.setValue(userNode) { error, _ in
+        reference.setValue(userNode) { [weak self] error, _ in
           guard error == nil else {
             completion(false)
             return
           }
           
-          completion(true)
+          self?.finishCreatingConversation(conversationID: conversationId,
+                                           firstMessage: firstMessage,
+                                           completion: completion)
         }
       }
+    }
+  }
+  
+  private func finishCreatingConversation(conversationID: String,
+                                          firstMessage: Message,
+                                          completion: @escaping (Bool) -> Void) {
+    
+    let messageDate = firstMessage.sentDate
+    let dateString = ChatWithPersonViewController.dateFormatter.string(from: messageDate)
+    
+    var content = ""
+    
+    switch firstMessage.kind {
+    case .text(let messageText):
+      content = messageText
+    case .attributedText(_):
+      break
+    case .photo(_):
+      break
+    case .video(_):
+      break
+    case .location(_):
+      break
+    case .emoji(_):
+      break
+    case .audio(_):
+      break
+    case .contact(_):
+      break
+    case .linkPreview(_):
+      break
+    case .custom(_):
+      break
+    }
+    
+    guard let myEmail = UserDefaults.standard.value(forKey: "email") as? String else {
+      completion(false)
+      return
+    }
+    
+    let currentEmail = DataBaseManager.safeEmail(email: myEmail)
+    
+    let collectionMessage: [String: Any] = [
+      "id": firstMessage.messageId,
+      "type": firstMessage.kind.messageKindString,
+      "content": content,
+      "date": dateString,
+      "sender_email": currentEmail,
+      "is_read": false
+    ]
+    
+    let value: [String: Any] = [
+      "messages": [
+        collectionMessage
+      ]
+    ]
+        
+    database.child("\(conversationID)").setValue(value) { error, _ in
+      guard error == nil else {
+        completion(false)
+        return
+      }
+      completion(true)
     }
   }
   

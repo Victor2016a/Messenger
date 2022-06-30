@@ -27,8 +27,10 @@ class ChatWithPersonViewController: MessagesViewController {
     
     guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return nil }
     
+    let safeEmail = DataBaseManager.safeEmail(email: email)
+    
     return Sender(photoURL: "",
-           senderId: email,
+           senderId: safeEmail,
            displayName: "Yan")
   }
   
@@ -87,11 +89,14 @@ extension ChatWithPersonViewController: InputBarAccessoryViewDelegate {
   }
   
   private func createMessageId() -> String? {
-    guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") else { return nil }
+    guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return nil }
+    
+    let currentUserEmail = DataBaseManager.safeEmail(email: email)
     
     let dateString = Self.dateFormatter.string(from: Date())
     let newIdentifier = "\(otherUserEmail)_\(currentUserEmail)_\(dateString)"
     
+    print(newIdentifier)
     return newIdentifier
   }
 }
