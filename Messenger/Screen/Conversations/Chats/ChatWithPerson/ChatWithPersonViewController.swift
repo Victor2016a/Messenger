@@ -21,8 +21,9 @@ class ChatWithPersonViewController: MessagesViewController {
   
   public var isNewConversation = false
   private var otherUserEmail: String
+  private var conversationId: String?
   private var messages = [Message]()
-  
+   
   private var selfSender: Sender? {
     
     guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return nil }
@@ -31,11 +32,12 @@ class ChatWithPersonViewController: MessagesViewController {
     
     return Sender(photoURL: "",
            senderId: safeEmail,
-           displayName: "Yan")
+           displayName: "Me")
   }
   
-  init(email: String) {
+  init(email: String, id: String?) {
     self.otherUserEmail = email
+    self.conversationId = id
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -52,6 +54,30 @@ class ChatWithPersonViewController: MessagesViewController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     messageInputBar.inputTextView.becomeFirstResponder()
+    if let conversationId = conversationId {
+      listenForMessages(id: conversationId, shouldScrollBotton: true)
+    }
+  }
+  
+  private func listenForMessages(id: String, shouldScrollBotton: Bool) {
+    DataBaseManager.shared.getAllMessagesForConversation(with: id) { [weak self] result in
+      switch result {
+      case .success(let messages):
+        guard !messages.isEmpty else { return }
+        self?.messages = messages
+        
+        DispatchQueue.main.async {
+          self?.messagesCollectionView.reloadDataAndKeepOffset()
+          
+          if shouldScrollBotton {
+            self?.messagesCollectionView.scrollToLastItem()
+          }
+        }
+        
+      case .failure(let error):
+        print(error)
+      }
+    }
   }
   
   private func configureMessages() {
@@ -79,6 +105,7 @@ extension ChatWithPersonViewController: InputBarAccessoryViewDelegate {
                             kind: .text(text))
       
       DataBaseManager.shared.createNewConversation(with: otherUserEmail,
+                                                   name: self.title ?? "User",
                                                    firstMessage: message) { sucess in
         
       }
@@ -107,12 +134,10 @@ extension ChatWithPersonViewController: MessagesDataSource {
       return sender
     }
     fatalError("Self sender is nil, email should be cache")
-    
-    return Sender(photoURL: "", senderId: "12", displayName: "")
   }
   
   func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-    return messages[indexPath.row]
+    return messages[indexPath.section]
   }
   
   func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {

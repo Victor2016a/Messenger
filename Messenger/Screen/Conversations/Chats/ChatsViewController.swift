@@ -9,6 +9,7 @@ import UIKit
 
 class ChatsViewController: UIViewController {
   let chatView = ChatsView()
+  var conversations = [ChatModel]()
   
   override func loadView() {
     super.loadView()
@@ -18,6 +19,7 @@ class ChatsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .orange
+    startListeningForConversations()
     setupNavigation()
     setupTableView()
   }
@@ -28,6 +30,27 @@ class ChatsViewController: UIViewController {
     navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose,
                                                         target: self,
                                                         action: #selector(didTapCompose))
+  }
+  
+  private func startListeningForConversations() {
+    guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return }
+    
+    let safeEmail = DataBaseManager.safeEmail(email: email)
+    
+    DataBaseManager.shared.getAllConversations(for: safeEmail) { [weak self] result in
+      switch result {
+      case .success(let conversations):
+        guard !conversations.isEmpty else { return }
+        self?.conversations = conversations
+        
+        DispatchQueue.main.async {
+          self?.chatView.tableView.reloadData()
+        }
+      case .failure(let error):
+        print(error)
+      }
+    }
+    
   }
   
   @objc private func didTapCompose() {
@@ -47,7 +70,7 @@ class ChatsViewController: UIViewController {
       return
     }
     
-    let chatsWithPersonVC = ChatWithPersonViewController(email: email)
+    let chatsWithPersonVC = ChatWithPersonViewController(email: email, id: nil)
     chatsWithPersonVC.isNewConversation = true
     chatsWithPersonVC.title = name
     chatsWithPersonVC.navigationItem.largeTitleDisplayMode = .never
@@ -65,12 +88,15 @@ class ChatsViewController: UIViewController {
 extension ChatsViewController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 1
+    return conversations.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: ChatsTableViewCell.identifier, for: indexPath)
-    cell.textLabel?.text = "Hello"
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatsTableViewCell.identifier, for: indexPath) as? ChatsTableViewCell else { return .init() }
+      
+    let model = conversations[indexPath.row]
+    cell.configure(with: model)
+      
     return cell
   }
 }
@@ -79,10 +105,16 @@ extension ChatsViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    let chatsWithPersonVC = ChatWithPersonViewController(email: "ff")
+    let model = conversations[indexPath.row]
     
-    chatsWithPersonVC.title = "Yan"
+    let chatsWithPersonVC = ChatWithPersonViewController(email: model.otherUserEmail, id: model.id)
+    chatsWithPersonVC.title = model.name
     chatsWithPersonVC.navigationItem.largeTitleDisplayMode = .never
+    
     navigationController?.pushViewController(chatsWithPersonVC, animated: true)
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 120
   }
 }
