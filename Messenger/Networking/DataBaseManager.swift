@@ -508,7 +508,7 @@ extension DataBaseManager {
             return
           }
           otherUserConversations[position] = finalConversation
-          self?.database.child("\(otherUserEmail)/messages").setValue(otherUserConversations,
+          self?.database.child("\(otherUserEmail)/conversations").setValue(otherUserConversations,
                                                                     withCompletionBlock: { error, _ in
             guard error == nil else{
               completion(false)
