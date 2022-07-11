@@ -36,7 +36,7 @@ class ChatWithPersonViewController: MessagesViewController {
   }
   
   init(email: String, id: String?) {
-    self.otherUserEmail = email
+    self.otherUserEmail = email 
     self.conversationId = id
     super.init(nibName: nil, bundle: nil)
   }
@@ -97,21 +97,42 @@ extension ChatWithPersonViewController: InputBarAccessoryViewDelegate {
       return
     }
     
+    let message = Message(sender: selfSender,
+                          messageId: messageId,
+                          sentDate: Date(),
+                          kind: .text(text))
+    
     if isNewConversation {
-      
-      let message = Message(sender: selfSender,
-                            messageId: messageId,
-                            sentDate: Date(),
-                            kind: .text(text))
       
       DataBaseManager.shared.createNewConversation(with: otherUserEmail,
                                                    name: self.title ?? "User",
-                                                   firstMessage: message) { sucess in
+                                                   firstMessage: message) { [weak self] success in
         
+        if success {
+          
+          self?.isNewConversation = false
+          
+        } else {
+         
+          print("Failed to send")
+          
+        }
       }
       
     } else {
       
+      guard let conversationId = conversationId, let name = self.title else { return }
+      
+      DataBaseManager.shared.sendMessage(to: conversationId,
+                                         otherUserEmail: otherUserEmail,
+                                         name: name,
+                                         newMessage: message) { success in
+        if success {
+          
+        } else {
+          
+        }
+      }
     }
   }
   

@@ -36,7 +36,7 @@ class ChatsViewController: UIViewController {
     guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return }
     
     let safeEmail = DataBaseManager.safeEmail(email: email)
-    
+
     DataBaseManager.shared.getAllConversations(for: safeEmail) { [weak self] result in
       switch result {
       case .success(let conversations):
@@ -50,7 +50,6 @@ class ChatsViewController: UIViewController {
         print(error)
       }
     }
-    
   }
   
   @objc private func didTapCompose() {
