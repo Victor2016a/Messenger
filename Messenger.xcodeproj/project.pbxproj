@@ -30,6 +30,7 @@
 		1339480C28537A09002A4BA3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1339480B28537A09002A4BA3 /* GoogleService-Info.plist */; };
 		1339480E2853B3AA002A4BA3 /* ChatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339480D2853B3AA002A4BA3 /* ChatsTableViewCell.swift */; };
 		1378C4B9286DFE6500E20BF5 /* ChatsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1378C4B8286DFE6500E20BF5 /* ChatsModel.swift */; };
+		138722DA28804EFB0064CE2C /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138722D928804EFB0064CE2C /* PhotoView.swift */; };
 		13E4259728576DFE00D9CB6D /* ChatWithPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259628576DFE00D9CB6D /* ChatWithPersonView.swift */; };
 		13E4259928576E2100D9CB6D /* ChatWithPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259828576E2100D9CB6D /* ChatWithPersonViewController.swift */; };
 		13E4259B2857726300D9CB6D /* ChatWithPersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259A2857726300D9CB6D /* ChatWithPersonModel.swift */; };
@@ -65,6 +66,7 @@
 		1339480B28537A09002A4BA3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1339480D2853B3AA002A4BA3 /* ChatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTableViewCell.swift; sourceTree = "<group>"; };
 		1378C4B8286DFE6500E20BF5 /* ChatsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsModel.swift; sourceTree = "<group>"; };
+		138722D928804EFB0064CE2C /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
 		13E4259628576DFE00D9CB6D /* ChatWithPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWithPersonView.swift; sourceTree = "<group>"; };
 		13E4259828576E2100D9CB6D /* ChatWithPersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWithPersonViewController.swift; sourceTree = "<group>"; };
 		13E4259A2857726300D9CB6D /* ChatWithPersonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWithPersonModel.swift; sourceTree = "<group>"; };
@@ -126,7 +128,6 @@
 		1303E331283BC813005BE248 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				1303E336283BC860005BE248 /* PhotoViewerViewController.swift */,
 				1303E338283BC874005BE248 /* VideoPlayerViewController.swift */,
 			);
 			path = Controllers;
@@ -204,12 +205,22 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		138722D828804ED90064CE2C /* Photo */ = {
+			isa = PBXGroup;
+			children = (
+				1303E336283BC860005BE248 /* PhotoViewerViewController.swift */,
+				138722D928804EFB0064CE2C /* PhotoView.swift */,
+			);
+			path = Photo;
+			sourceTree = "<group>";
+		};
 		13E4259528576D2C00D9CB6D /* ChatWithPerson */ = {
 			isa = PBXGroup;
 			children = (
 				13E4259A2857726300D9CB6D /* ChatWithPersonModel.swift */,
 				13E4259628576DFE00D9CB6D /* ChatWithPersonView.swift */,
 				13E4259828576E2100D9CB6D /* ChatWithPersonViewController.swift */,
+				138722D828804ED90064CE2C /* Photo */,
 			);
 			path = ChatWithPerson;
 			sourceTree = "<group>";
@@ -379,6 +390,7 @@
 				13EABD93285CDB6B000DE101 /* ProfileHeaderTableView.swift in Sources */,
 				1339480128537537002A4BA3 /* RegisterViewController.swift in Sources */,
 				13E4259B2857726300D9CB6D /* ChatWithPersonModel.swift in Sources */,
+				138722DA28804EFB0064CE2C /* PhotoView.swift in Sources */,
 				13EABD95285CE2D7000DE101 /* ImageProvider.swift in Sources */,
 				13E4259E2857863E00D9CB6D /* NewConversationView.swift in Sources */,
 				133947FF2853752F002A4BA3 /* RegisterView.swift in Sources */,
