@@ -10,9 +10,9 @@ import UIKit
 class NewConversationViewController: UIViewController {
   private let newConversationView = NewConversationView()
   
-  public var completion: (([String: String]) -> (Void))?
+  public var completion: ((NewConversationModel) -> (Void))?
   private var users = [[String: String]]()
-  private var results = [[String: String]]()
+  private var results = [NewConversationModel]()
   private var hasFetch = false
   
   override func loadView() {
@@ -37,7 +37,8 @@ class NewConversationViewController: UIViewController {
   }
   
   private func configureTableView() {
-    newConversationView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    newConversationView.tableView.register(NewConversationTableViewCell.self,
+                                           forCellReuseIdentifier: NewConversationTableViewCell.identifier)
     newConversationView.tableView.dataSource = self
     newConversationView.tableView.delegate = self
   }
@@ -54,8 +55,13 @@ extension NewConversationViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-    cell.textLabel?.text = results[indexPath.row]["name"]
+    let model = results[indexPath.row]
+    
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: NewConversationTableViewCell.identifier, for: indexPath) as? NewConversationTableViewCell else {
+      return .init()
+    }
+    
+    cell.configure(with: model)
     return cell
   }
 }
@@ -69,6 +75,10 @@ extension NewConversationViewController: UITableViewDelegate {
     dismiss(animated: true) { [weak self] in
       self?.completion?(targetUserData)
     }
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 90
   }
 }
 
@@ -107,19 +117,35 @@ extension NewConversationViewController: UISearchBarDelegate {
   
   func filterUsers(with term: String) {
     
-    guard hasFetch else {
+    guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") as? String, hasFetch else {
       return
     }
     
+    let safeEmail = DataBaseManager.safeEmail(email: currentUserEmail)
+    
     self.newConversationView.spinner.dismiss()
     
-    let results: [[String: String]] = self.users.filter {
+    let results: [NewConversationModel] = self.users.filter {
+      
+      guard let email = $0["email"],
+            email != safeEmail else {
+        return false
+      }
+      
       guard let name = $0["name"]?.lowercased() else {
         return false
       }
       
       return name.hasPrefix(term.lowercased())
-    }
+      
+    }.compactMap({
+      
+      guard let email = $0["email"], let name = $0["name"] else {
+        return nil
+      }
+      
+      return NewConversationModel(name: name, email: email)
+    })
     
     self.results = results
     updateUI()

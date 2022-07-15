@@ -63,11 +63,9 @@ class ChatsViewController: UIViewController {
     present(navigationVC, animated: true)
   }
   
-  private func creatNewConversation(result: [String: String]) {
-    guard let name = result["name"],
-          let email = result["email"] else {
-      return
-    }
+  private func creatNewConversation(result: NewConversationModel) {
+    let name = result.name
+    let email = result.email
     
     let chatsWithPersonVC = ChatWithPersonViewController(email: email, id: nil)
     chatsWithPersonVC.isNewConversation = true
@@ -91,7 +89,9 @@ extension ChatsViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatsTableViewCell.identifier, for: indexPath) as? ChatsTableViewCell else { return .init() }
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatsTableViewCell.identifier, for: indexPath) as? ChatsTableViewCell else {
+      return .init()
+    }
       
     let model = conversations[indexPath.row]
     cell.configure(with: model)

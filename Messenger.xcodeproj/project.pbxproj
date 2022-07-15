@@ -31,6 +31,8 @@
 		1339480E2853B3AA002A4BA3 /* ChatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339480D2853B3AA002A4BA3 /* ChatsTableViewCell.swift */; };
 		1378C4B9286DFE6500E20BF5 /* ChatsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1378C4B8286DFE6500E20BF5 /* ChatsModel.swift */; };
 		138722DA28804EFB0064CE2C /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138722D928804EFB0064CE2C /* PhotoView.swift */; };
+		138722DC2881C8F50064CE2C /* NewConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138722DB2881C8F50064CE2C /* NewConversationTableViewCell.swift */; };
+		138722DE2881CBC30064CE2C /* NewConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138722DD2881CBC30064CE2C /* NewConversationModel.swift */; };
 		13E4259728576DFE00D9CB6D /* ChatWithPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259628576DFE00D9CB6D /* ChatWithPersonView.swift */; };
 		13E4259928576E2100D9CB6D /* ChatWithPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259828576E2100D9CB6D /* ChatWithPersonViewController.swift */; };
 		13E4259B2857726300D9CB6D /* ChatWithPersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259A2857726300D9CB6D /* ChatWithPersonModel.swift */; };
@@ -67,6 +69,8 @@
 		1339480D2853B3AA002A4BA3 /* ChatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTableViewCell.swift; sourceTree = "<group>"; };
 		1378C4B8286DFE6500E20BF5 /* ChatsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsModel.swift; sourceTree = "<group>"; };
 		138722D928804EFB0064CE2C /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
+		138722DB2881C8F50064CE2C /* NewConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationTableViewCell.swift; sourceTree = "<group>"; };
+		138722DD2881CBC30064CE2C /* NewConversationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationModel.swift; sourceTree = "<group>"; };
 		13E4259628576DFE00D9CB6D /* ChatWithPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWithPersonView.swift; sourceTree = "<group>"; };
 		13E4259828576E2100D9CB6D /* ChatWithPersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWithPersonViewController.swift; sourceTree = "<group>"; };
 		13E4259A2857726300D9CB6D /* ChatWithPersonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWithPersonModel.swift; sourceTree = "<group>"; };
@@ -171,8 +175,8 @@
 				133947F22853749B002A4BA3 /* ConversationsView.swift */,
 				133947F4285374AA002A4BA3 /* ConversationsViewController.swift */,
 				133948082853764D002A4BA3 /* Chats */,
-				13394809285376F7002A4BA3 /* Profile */,
 				13E4259C285785E900D9CB6D /* NewConversation */,
+				13394809285376F7002A4BA3 /* Profile */,
 			);
 			path = Conversations;
 			sourceTree = "<group>";
@@ -228,7 +232,9 @@
 		13E4259C285785E900D9CB6D /* NewConversation */ = {
 			isa = PBXGroup;
 			children = (
+				138722DD2881CBC30064CE2C /* NewConversationModel.swift */,
 				13E4259D2857863E00D9CB6D /* NewConversationView.swift */,
+				138722DB2881C8F50064CE2C /* NewConversationTableViewCell.swift */,
 				1303E33A283BC888005BE248 /* NewConversationViewController.swift */,
 			);
 			path = NewConversation;
@@ -391,10 +397,12 @@
 				1339480128537537002A4BA3 /* RegisterViewController.swift in Sources */,
 				13E4259B2857726300D9CB6D /* ChatWithPersonModel.swift in Sources */,
 				138722DA28804EFB0064CE2C /* PhotoView.swift in Sources */,
+				138722DE2881CBC30064CE2C /* NewConversationModel.swift in Sources */,
 				13EABD95285CE2D7000DE101 /* ImageProvider.swift in Sources */,
 				13E4259E2857863E00D9CB6D /* NewConversationView.swift in Sources */,
 				133947FF2853752F002A4BA3 /* RegisterView.swift in Sources */,
 				1339480528537592002A4BA3 /* LoginViewController.swift in Sources */,
+				138722DC2881C8F50064CE2C /* NewConversationTableViewCell.swift in Sources */,
 				1339480E2853B3AA002A4BA3 /* ChatsTableViewCell.swift in Sources */,
 				1303E337283BC860005BE248 /* PhotoViewerViewController.swift in Sources */,
 				1339480328537588002A4BA3 /* LoginView.swift in Sources */,
