@@ -64,20 +64,20 @@ extension DataBaseManager {
       self.database.child("users").observeSingleEvent(of: .value) { snapShot in
         if var usersCollection = snapShot.value as? [[String: String]] {
           
-//          let newElement = [
-//              "name": user.firstName + " " + user.lastName,
-//              "email": user.safeEmail
-//          ]
-//
-//          usersCollection.append(newElement)
-//
-//          self.database.child("users").setValue(usersCollection) { error, _ in
-//            guard error == nil else {
-//              completion(false)
-//              return
-//            }
-//            completion(true)
-//          }
+          let newElement = [
+              "name": user.firstName + " " + user.lastName,
+              "email": user.safeEmail
+          ]
+
+          usersCollection.append(newElement)
+
+          self.database.child("users").setValue(usersCollection) { error, _ in
+            guard error == nil else {
+              completion(false)
+              return
+            }
+            completion(true)
+          }
                     
         } else {
           
@@ -372,9 +372,21 @@ extension DataBaseManager {
                             size: CGSize(width: 300, height: 300))
           kind = .photo(media)
           
-        } else {
+        } else if type == "video" {
           
-          kind = .text(content) 
+          guard let videoUrl = URL(string: content),
+                let placeHolder = UIImage(systemName: "play.rectangle") else {
+            return nil
+          }
+          
+          let media = Media(url: videoUrl,
+                            image: nil,
+                            placeholderImage: placeHolder,
+                            size: CGSize(width: 300, height: 300))
+          kind = .video(media)
+           
+        } else {
+          kind = .text(content)
         }
         
         guard let finalKind = kind else {
@@ -429,7 +441,10 @@ extension DataBaseManager {
           message = targetUrlString
         }
         break
-      case .video(_):
+      case .video(let mediaItem):
+        if let targetUrlString = mediaItem.url?.absoluteString {
+          message = targetUrlString
+        }
         break
       case .location(_):
         break

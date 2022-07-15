@@ -68,6 +68,33 @@ final class StorageManager {
     }
   }
   
+  public func uploadMessageVideo(with fileUrl: URL,
+                                 fileName: String,
+                                 completion: @escaping UploadPictureCompletion) {
+    
+    storage.child("message_videos/\(fileName)").putFile(from: fileUrl, metadata: nil) { [weak self] metaData, error in
+      
+      guard error == nil else {
+        print("Failed to upload video")
+        completion(.failure(StorageErrors.failedToUpload))
+        return
+      }
+
+      self?.storage.child("message_videos/\(fileName)").downloadURL(completion: { url, error in
+        guard let url = url else {
+          print("Failed to get url")
+          completion(.failure(StorageErrors.failedToGetDownloadUrl))
+          return
+        }
+        
+        let urlString = url.absoluteString
+        print("Download url returned: \(urlString)")
+        completion(.success(urlString))
+      })
+    }
+  }
+  
+  
   public func downloadURL(for path: String, completion: @escaping (Result<URL, Error>) -> Void) {
     let reference = storage.child(path)
 
