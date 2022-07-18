@@ -22,6 +22,18 @@ class ChatsViewController: UIViewController {
     startListeningForConversations()
     setupNavigation()
     setupTableView()
+    setupNotification()
+  }
+  
+  private var loginObserver: NSObjectProtocol?
+  
+  private func setupNotification() {
+    let nameNotification = Notification.Name("didLogInNotification")
+    loginObserver = NotificationCenter.default.addObserver(forName: nameNotification,
+                                                           object: nil,
+                                                           queue: .main, using: { [weak self] _ in
+      self?.navigationController?.dismiss(animated: true)
+    })
   }
   
   private func setupNavigation() {
@@ -34,6 +46,10 @@ class ChatsViewController: UIViewController {
   
   private func startListeningForConversations() {
     guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return }
+    
+    if let loginObserver = loginObserver {
+      NotificationCenter.default.removeObserver(loginObserver)
+    }
     
     let safeEmail = DataBaseManager.safeEmail(email: email)
 
@@ -115,5 +131,20 @@ extension ChatsViewController: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 120
+  }
+  
+  func tableView(_ tableView: UITableView,
+                 editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+    return .delete
+  }
+  
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    
+    if editingStyle == .delete {
+      tableView.beginUpdates()
+      conversations.remove(at: indexPath.row)
+      tableView.deleteRows(at: [indexPath], with: .left)
+      tableView.endUpdates()
+    }
   }
 }
