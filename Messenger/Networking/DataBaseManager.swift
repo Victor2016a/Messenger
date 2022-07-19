@@ -38,11 +38,10 @@ extension DataBaseManager {
 extension DataBaseManager {
   public func emailExists(with email: String, completion: @escaping ((Bool) -> Void)) {
     
-    var safeEmail = email.replacingOccurrences(of: ".", with: "-")
-    safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
+    let safeEmail = DataBaseManager.safeEmail(email: email)
     
     database.child(safeEmail).observeSingleEvent(of: .value) { snapshot in
-      guard snapshot.value as? String != nil else {
+      guard snapshot.value as? [String: Any] != nil else {
         completion(false)
         return
       }
