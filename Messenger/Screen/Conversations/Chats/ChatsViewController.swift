@@ -72,7 +72,20 @@ class ChatsViewController: UIViewController {
     let newConversationVC = NewConversationViewController()
     
     newConversationVC.completion = { [weak self] result in
-      self?.creatNewConversation(result: result)
+      
+      if let targetConversation = self?.conversations.first(where: {
+        $0.otherUserEmail == DataBaseManager.safeEmail(email: result.email)
+      }) {
+        let chatsWithPersonVC = ChatWithPersonViewController(email: targetConversation.otherUserEmail,
+                                                             id: targetConversation.id)
+        chatsWithPersonVC.isNewConversation = true
+        chatsWithPersonVC.title = targetConversation.name
+        chatsWithPersonVC.navigationItem.largeTitleDisplayMode = .never
+        self?.navigationController?.pushViewController(chatsWithPersonVC, animated: true)
+        
+      } else {
+        self?.creatNewConversation(result: result)
+      }
     }
     
     let navigationVC = UINavigationController(rootViewController: newConversationVC)
@@ -81,13 +94,25 @@ class ChatsViewController: UIViewController {
   
   private func creatNewConversation(result: NewConversationModel) {
     let name = result.name
-    let email = result.email
+    let email = DataBaseManager.safeEmail(email: result.email)
     
-    let chatsWithPersonVC = ChatWithPersonViewController(email: email, id: nil)
-    chatsWithPersonVC.isNewConversation = true
-    chatsWithPersonVC.title = name
-    chatsWithPersonVC.navigationItem.largeTitleDisplayMode = .never
-    navigationController?.pushViewController(chatsWithPersonVC, animated: true)
+    DataBaseManager.shared.conversationExists(with: email) { [weak self] result in
+      switch result {
+      case.success(let conversationId):
+        let chatsWithPersonVC = ChatWithPersonViewController(email: email, id: conversationId)
+        chatsWithPersonVC.isNewConversation = false
+        chatsWithPersonVC.title = name
+        chatsWithPersonVC.navigationItem.largeTitleDisplayMode = .never
+        self?.navigationController?.pushViewController(chatsWithPersonVC, animated: true)
+        
+      case.failure(_):
+        let chatsWithPersonVC = ChatWithPersonViewController(email: email, id: nil)
+        chatsWithPersonVC.isNewConversation = true
+        chatsWithPersonVC.title = name
+        chatsWithPersonVC.navigationItem.largeTitleDisplayMode = .never
+        self?.navigationController?.pushViewController(chatsWithPersonVC, animated: true)
+      }
+    }
   }
   
   private func setupTableView() {
@@ -121,11 +146,13 @@ extension ChatsViewController: UITableViewDelegate {
     tableView.deselectRow(at: indexPath, animated: true)
     
     let model = conversations[indexPath.row]
-    
+    openConversation(with: model)
+  }
+  
+  private func openConversation(with model: ChatModel) {
     let chatsWithPersonVC = ChatWithPersonViewController(email: model.otherUserEmail, id: model.id)
     chatsWithPersonVC.title = model.name
     chatsWithPersonVC.navigationItem.largeTitleDisplayMode = .never
-    
     navigationController?.pushViewController(chatsWithPersonVC, animated: true)
   }
   

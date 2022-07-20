@@ -115,10 +115,10 @@
 		1303E31C283BC2FF005BE248 /* Messenger */ = {
 			isa = PBXGroup;
 			children = (
-				133947EB285373B9002A4BA3 /* MessengerModel.swift */,
-				133947EF2853745E002A4BA3 /* Networking */,
 				133948062853761C002A4BA3 /* AppDelegate.swift */,
 				1303E31F283BC2FF005BE248 /* SceneDelegate.swift */,
+				133947EB285373B9002A4BA3 /* MessengerModel.swift */,
+				133947EF2853745E002A4BA3 /* Networking */,
 				136F8D90283D15D600826974 /* Screen */,
 				1303E331283BC813005BE248 /* Controllers */,
 				1303E326283BC302005BE248 /* Assets.xcassets */,
