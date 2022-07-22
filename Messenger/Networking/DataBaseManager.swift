@@ -346,7 +346,7 @@ extension DataBaseManager {
       }
       let messages: [Message] = value.compactMap { dictionary in
         guard let name = dictionary["name"] as? String,
-              let isRead = dictionary["is_read"] as? Bool,
+              let _ = dictionary["is_read"] as? Bool,
               let messageID = dictionary["id"] as? String,
               let content = dictionary["content"] as? String,
               let senderEmail = dictionary["sender_email"] as? String,

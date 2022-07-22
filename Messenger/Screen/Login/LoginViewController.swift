@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
   
   private func setupView() {
     title = "Log In"
-    view.backgroundColor = .white
+    view.backgroundColor = .systemBackground
     
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register",
                                                         style: .plain,

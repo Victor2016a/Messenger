@@ -22,14 +22,14 @@
 		133947F9285374C7002A4BA3 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947F8285374C7002A4BA3 /* ChatsViewController.swift */; };
 		133947FB285374FA002A4BA3 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947FA285374FA002A4BA3 /* ProfileView.swift */; };
 		133947FD28537506002A4BA3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947FC28537506002A4BA3 /* ProfileViewController.swift */; };
-		133947FF2853752F002A4BA3 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947FE2853752F002A4BA3 /* RegisterView.swift */; };
-		1339480128537537002A4BA3 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339480028537537002A4BA3 /* RegisterViewController.swift */; };
-		1339480328537588002A4BA3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339480228537588002A4BA3 /* LoginView.swift */; };
-		1339480528537592002A4BA3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339480428537592002A4BA3 /* LoginViewController.swift */; };
-		133948072853761C002A4BA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133948062853761C002A4BA3 /* AppDelegate.swift */; };
 		1339480C28537A09002A4BA3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1339480B28537A09002A4BA3 /* GoogleService-Info.plist */; };
 		1339480E2853B3AA002A4BA3 /* ChatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339480D2853B3AA002A4BA3 /* ChatsTableViewCell.swift */; };
 		1378C4B9286DFE6500E20BF5 /* ChatsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1378C4B8286DFE6500E20BF5 /* ChatsModel.swift */; };
+		137CA14F288ADB4900228326 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137CA14E288ADB4900228326 /* LoginViewController.swift */; };
+		137CA151288ADB5300228326 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137CA150288ADB5300228326 /* LoginView.swift */; };
+		137CA153288ADB6200228326 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137CA152288ADB6200228326 /* RegisterView.swift */; };
+		137CA155288ADB7300228326 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137CA154288ADB7300228326 /* RegisterViewController.swift */; };
+		137CA157288ADB8A00228326 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137CA156288ADB8A00228326 /* AppDelegate.swift */; };
 		138722DA28804EFB0064CE2C /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138722D928804EFB0064CE2C /* PhotoView.swift */; };
 		138722DC2881C8F50064CE2C /* NewConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138722DB2881C8F50064CE2C /* NewConversationTableViewCell.swift */; };
 		138722DE2881CBC30064CE2C /* NewConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138722DD2881CBC30064CE2C /* NewConversationModel.swift */; };
@@ -60,14 +60,14 @@
 		133947F8285374C7002A4BA3 /* ChatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
 		133947FA285374FA002A4BA3 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		133947FC28537506002A4BA3 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		133947FE2853752F002A4BA3 /* RegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegisterView.swift; path = "../../../../../../Users/victorvieira/Downloads/Messenger-main/Messenger/Screen/Register/RegisterView.swift"; sourceTree = "<group>"; };
-		1339480028537537002A4BA3 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegisterViewController.swift; path = "../../../../../../Users/victorvieira/Downloads/Messenger-main/Messenger/Screen/Register/RegisterViewController.swift"; sourceTree = "<group>"; };
-		1339480228537588002A4BA3 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginView.swift; path = "../../../../../../Users/victorvieira/Downloads/Messenger-main/Messenger/Screen/Login/LoginView.swift"; sourceTree = "<group>"; };
-		1339480428537592002A4BA3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = "../../../../../../Users/victorvieira/Downloads/Messenger-main/Messenger/Screen/Login/LoginViewController.swift"; sourceTree = "<group>"; };
-		133948062853761C002A4BA3 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "../../../../Users/victorvieira/Downloads/Messenger-main/Messenger/AppDelegate.swift"; sourceTree = "<group>"; };
 		1339480B28537A09002A4BA3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1339480D2853B3AA002A4BA3 /* ChatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTableViewCell.swift; sourceTree = "<group>"; };
 		1378C4B8286DFE6500E20BF5 /* ChatsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsModel.swift; sourceTree = "<group>"; };
+		137CA14E288ADB4900228326 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		137CA150288ADB5300228326 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		137CA152288ADB6200228326 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		137CA154288ADB7300228326 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		137CA156288ADB8A00228326 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		138722D928804EFB0064CE2C /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
 		138722DB2881C8F50064CE2C /* NewConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationTableViewCell.swift; sourceTree = "<group>"; };
 		138722DD2881CBC30064CE2C /* NewConversationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationModel.swift; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 		1303E31C283BC2FF005BE248 /* Messenger */ = {
 			isa = PBXGroup;
 			children = (
-				133948062853761C002A4BA3 /* AppDelegate.swift */,
+				137CA156288ADB8A00228326 /* AppDelegate.swift */,
 				1303E31F283BC2FF005BE248 /* SceneDelegate.swift */,
 				133947EB285373B9002A4BA3 /* MessengerModel.swift */,
 				133947EF2853745E002A4BA3 /* Networking */,
@@ -184,8 +184,8 @@
 		1364EDB0283E655800463EBD /* Register */ = {
 			isa = PBXGroup;
 			children = (
-				133947FE2853752F002A4BA3 /* RegisterView.swift */,
-				1339480028537537002A4BA3 /* RegisterViewController.swift */,
+				137CA152288ADB6200228326 /* RegisterView.swift */,
+				137CA154288ADB7300228326 /* RegisterViewController.swift */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -203,8 +203,8 @@
 		136F8D93283D163400826974 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				1339480228537588002A4BA3 /* LoginView.swift */,
-				1339480428537592002A4BA3 /* LoginViewController.swift */,
+				137CA150288ADB5300228326 /* LoginView.swift */,
+				137CA14E288ADB4900228326 /* LoginViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -380,6 +380,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				137CA14F288ADB4900228326 /* LoginViewController.swift in Sources */,
+				137CA151288ADB5300228326 /* LoginView.swift in Sources */,
 				1303E33B283BC888005BE248 /* NewConversationViewController.swift in Sources */,
 				133947F32853749B002A4BA3 /* ConversationsView.swift in Sources */,
 				133947F9285374C7002A4BA3 /* ChatsViewController.swift in Sources */,
@@ -394,19 +396,17 @@
 				133947F7285374BE002A4BA3 /* ChatsView.swift in Sources */,
 				13E4259928576E2100D9CB6D /* ChatWithPersonViewController.swift in Sources */,
 				13EABD93285CDB6B000DE101 /* ProfileHeaderTableView.swift in Sources */,
-				1339480128537537002A4BA3 /* RegisterViewController.swift in Sources */,
 				13E4259B2857726300D9CB6D /* ChatWithPersonModel.swift in Sources */,
 				138722DA28804EFB0064CE2C /* PhotoView.swift in Sources */,
+				137CA157288ADB8A00228326 /* AppDelegate.swift in Sources */,
 				138722DE2881CBC30064CE2C /* NewConversationModel.swift in Sources */,
 				13EABD95285CE2D7000DE101 /* ImageProvider.swift in Sources */,
+				137CA155288ADB7300228326 /* RegisterViewController.swift in Sources */,
+				137CA153288ADB6200228326 /* RegisterView.swift in Sources */,
 				13E4259E2857863E00D9CB6D /* NewConversationView.swift in Sources */,
-				133947FF2853752F002A4BA3 /* RegisterView.swift in Sources */,
-				1339480528537592002A4BA3 /* LoginViewController.swift in Sources */,
 				138722DC2881C8F50064CE2C /* NewConversationTableViewCell.swift in Sources */,
 				1339480E2853B3AA002A4BA3 /* ChatsTableViewCell.swift in Sources */,
 				1303E337283BC860005BE248 /* PhotoViewerViewController.swift in Sources */,
-				1339480328537588002A4BA3 /* LoginView.swift in Sources */,
-				133948072853761C002A4BA3 /* AppDelegate.swift in Sources */,
 				133947EE28537456002A4BA3 /* DataBaseManager.swift in Sources */,
 				13267C2F285A198700A02FFE /* StorageManager.swift in Sources */,
 			);

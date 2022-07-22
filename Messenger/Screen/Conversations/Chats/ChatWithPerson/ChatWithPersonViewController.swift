@@ -84,12 +84,12 @@ class ChatWithPersonViewController: MessagesViewController {
     
     actionSheet.addAction(UIAlertAction(title: "Audio",
                                         style: .default,
-                                        handler: { [weak self] _ in
+                                        handler: { _ in
     }))
     
     actionSheet.addAction(UIAlertAction(title: "Cancel",
                                         style: .cancel,
-                                        handler: { [weak self] _ in
+                                        handler: { _ in
     }))
     
     present(actionSheet, animated: true)

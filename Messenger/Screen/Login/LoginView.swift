@@ -1,11 +1,13 @@
 //
-//  Conversations.swift
+//  LoginView.swift
 //  Messenger
 //
 //  Created by Victor Vieira on 24/05/22.
 //
 
 import UIKit
+import FBSDKLoginKit
+import GoogleSignIn
 
 class LoginView: UIView {
   private let scrollView: UIScrollView = {
@@ -35,6 +37,7 @@ class LoginView: UIView {
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
     textField.leftViewMode = .always
+    textField.backgroundColor = .secondarySystemBackground
     return textField
   }()
   
@@ -51,6 +54,8 @@ class LoginView: UIView {
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
     textField.leftViewMode = .always
+    textField.backgroundColor = .secondarySystemBackground
+
     return textField
   }()
   
@@ -62,6 +67,19 @@ class LoginView: UIView {
     button.layer.cornerRadius = 12
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
+  }()
+  
+  let facebookLoginButton: FBLoginButton = {
+    let facebookButton = FBLoginButton()
+    facebookButton.translatesAutoresizingMaskIntoConstraints = false
+    facebookButton.permissions = ["public_profile", "email"]
+    return facebookButton
+  }()
+  
+  let googleLoginButton: GIDSignInButton = {
+    let googleButton = GIDSignInButton()
+    googleButton.translatesAutoresizingMaskIntoConstraints = false
+    return googleButton
   }()
   
   override init(frame: CGRect) {
@@ -80,6 +98,8 @@ class LoginView: UIView {
     scrollView.addSubview(emailTextField)
     scrollView.addSubview(passwordTextField)
     scrollView.addSubview(loginButton)
+    scrollView.addSubview(facebookLoginButton)
+    scrollView.addSubview(googleLoginButton)
   }
   
   private func setupConstraints() {
@@ -107,7 +127,15 @@ class LoginView: UIView {
       loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 30),
       loginButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50),
       loginButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50),
-      loginButton.heightAnchor.constraint(equalToConstant: 50)
+      loginButton.heightAnchor.constraint(equalToConstant: 50),
+      
+      facebookLoginButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 30),
+      facebookLoginButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50),
+      facebookLoginButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50),
+      
+      googleLoginButton.topAnchor.constraint(equalTo: facebookLoginButton.bottomAnchor, constant: 30),
+      googleLoginButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50),
+      googleLoginButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50)
     ])
   }
 }

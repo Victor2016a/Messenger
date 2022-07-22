@@ -21,7 +21,7 @@ class RegisterViewController: UIViewController {
   }
   
   private func setupView() {
-    view.backgroundColor = .white
+    view.backgroundColor = .systemBackground
     title = "Create Account"
     
     registerView.registerButton.addTarget(self,
@@ -142,6 +142,8 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
     
     registerView.profileImageView.image = selectedImage
     registerView.profileImageView.layer.cornerRadius = registerView.profileImageView.bounds.width/2
+    registerView.profileImageView.layer.borderWidth = 1.5
+    registerView.profileImageView.layer.borderColor = UIColor.lightGray.cgColor
   }
   
   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

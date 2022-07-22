@@ -18,7 +18,7 @@ class ChatsViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .orange
+    view.backgroundColor = .systemBackground
     startListeningForConversations()
     setupNavigation()
     setupTableView()

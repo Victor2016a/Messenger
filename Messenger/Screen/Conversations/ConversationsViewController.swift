@@ -16,7 +16,7 @@ class ConversationsViewController: UIViewController {
   }
   
   override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
+    super.viewDidAppear(true)
     validateAuth()
     setupView()
   }
@@ -26,9 +26,12 @@ class ConversationsViewController: UIViewController {
     let chatsVC = UINavigationController(rootViewController: ChatsViewController())
     let profileVC = UINavigationController(rootViewController: ProfileViewController())
     
+    chatsVC.tabBarItem.image = UIImage(systemName: "message")
+    profileVC.tabBarItem.image = UIImage(systemName: "person")
+    
     tabBarVC.setViewControllers([chatsVC,profileVC], animated: false)
     tabBarVC.modalPresentationStyle = .fullScreen
-    tabBarVC.tabBar.backgroundColor = .lightGray
+    tabBarVC.tabBar.backgroundColor = .systemBackground
     
     present(tabBarVC, animated: false, completion: nil)
   }

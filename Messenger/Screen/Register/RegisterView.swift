@@ -17,11 +17,9 @@ class RegisterView: UIView {
   
   let profileImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = UIImage(systemName: "person")
+    imageView.image = UIImage(systemName: "person.circle")
     imageView.layer.masksToBounds = true
     imageView.contentMode = .scaleAspectFit
-    imageView.layer.borderWidth = 1.5
-    imageView.layer.borderColor = UIColor.lightGray.cgColor
     imageView.translatesAutoresizingMaskIntoConstraints = false
     return imageView
   }()
@@ -38,6 +36,7 @@ class RegisterView: UIView {
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
     textField.leftViewMode = .always
+    textField.backgroundColor = .secondarySystemBackground
     return textField
   }()
   
@@ -53,6 +52,7 @@ class RegisterView: UIView {
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
     textField.leftViewMode = .always
+    textField.backgroundColor = .secondarySystemBackground
     return textField
   }()
   
@@ -68,6 +68,7 @@ class RegisterView: UIView {
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
     textField.leftViewMode = .always
+    textField.backgroundColor = .secondarySystemBackground
     return textField
   }()
   
@@ -84,6 +85,7 @@ class RegisterView: UIView {
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
     textField.leftViewMode = .always
+    textField.backgroundColor = .secondarySystemBackground
     return textField
   }()
   
