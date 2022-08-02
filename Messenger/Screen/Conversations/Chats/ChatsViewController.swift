@@ -45,6 +45,7 @@ class ChatsViewController: UIViewController {
   }
   
   private func startListeningForConversations() {
+    chatView.spinner.show(in: view)
     guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return }
     
     if let loginObserver = loginObserver {
@@ -56,13 +57,26 @@ class ChatsViewController: UIViewController {
     DataBaseManager.shared.getAllConversations(for: safeEmail) { [weak self] result in
       switch result {
       case .success(let conversations):
-        guard !conversations.isEmpty else { return }
+        guard !conversations.isEmpty else {
+          self?.chatView.spinner.dismiss(animated: true)
+          self?.chatView.tableView.isHidden = true
+          self?.chatView.noConversationsLabel.isHidden = false
+          return
+        }
+        
+        self?.chatView.noConversationsLabel.isHidden = true
+        self?.chatView.tableView.isHidden = false
         self?.conversations = conversations
         
         DispatchQueue.main.async {
+          self?.chatView.spinner.dismiss(animated: true)
           self?.chatView.tableView.reloadData()
         }
+        
       case .failure(let error):
+        self?.chatView.tableView.isHidden = true
+        self?.chatView.noConversationsLabel.isHidden = false
+        self?.chatView.spinner.dismiss(animated: true)
         print(error)
       }
     }
@@ -78,7 +92,7 @@ class ChatsViewController: UIViewController {
       }) {
         let chatsWithPersonVC = ChatWithPersonViewController(email: targetConversation.otherUserEmail,
                                                              id: targetConversation.id)
-        chatsWithPersonVC.isNewConversation = true
+        chatsWithPersonVC.isNewConversation = false
         chatsWithPersonVC.title = targetConversation.name
         chatsWithPersonVC.navigationItem.largeTitleDisplayMode = .never
         self?.navigationController?.pushViewController(chatsWithPersonVC, animated: true)
@@ -136,7 +150,7 @@ extension ChatsViewController: UITableViewDataSource {
       
     let model = conversations[indexPath.row]
     cell.configure(with: model)
-      
+  
     return cell
   }
 }
@@ -170,14 +184,14 @@ extension ChatsViewController: UITableViewDelegate {
     if editingStyle == .delete {
       let conversationId = conversations[indexPath.row].id
       tableView.beginUpdates()
+      self.conversations.remove(at: indexPath.row)
+      tableView.deleteRows(at: [indexPath], with: .left)
       
-      DataBaseManager.shared.deleteConversation(conversationId: conversationId) { [weak self] success in
-        if success {
-          self?.conversations.remove(at: indexPath.row)
-          tableView.deleteRows(at: [indexPath], with: .left)
+      DataBaseManager.shared.deleteConversation(conversationId: conversationId) { success in
+        if !success {
+          print("Failed delete in database")
         }
       }
-      
       tableView.endUpdates()
     }
   }

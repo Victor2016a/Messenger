@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class RegisterView: UIView {
+  let spinner = JGProgressHUD(style: .dark)
+  
   private let scrollView: UIScrollView = {
     let scrollView = UIScrollView()
     scrollView.translatesAutoresizingMaskIntoConstraints = false

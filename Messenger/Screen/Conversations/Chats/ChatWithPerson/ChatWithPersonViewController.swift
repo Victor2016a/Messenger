@@ -9,9 +9,12 @@ import UIKit
 import MessageKit
 import InputBarAccessoryView
 import SDWebImage
+import CoreLocation
 import AVKit
 
 class ChatWithPersonViewController: MessagesViewController {
+  private var senderPhotoUrl: URL?
+  private var otherPhotoUrl: URL?
   
   public static let dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
@@ -87,12 +90,54 @@ class ChatWithPersonViewController: MessagesViewController {
                                         handler: { _ in
     }))
     
+    actionSheet.addAction(UIAlertAction(title: "Location",
+                                        style: .default,
+                                        handler: { [weak self] _ in
+      self?.presentLocationPicker()
+    }))
+    
     actionSheet.addAction(UIAlertAction(title: "Cancel",
                                         style: .cancel,
                                         handler: { _ in
     }))
     
     present(actionSheet, animated: true)
+  }
+  
+  private func presentLocationPicker() {
+    let locationVC = LocationPickerViewController(coordinates: nil, isPickable: true)
+    locationVC.title = "Pick Location"
+    locationVC.navigationItem.largeTitleDisplayMode = .never
+    locationVC.completion = { [weak self] selectedCoordinator in
+      
+      guard let messageId = self?.createMessageId(),
+            let conversationId = self?.conversationId,
+            let name = self?.title,
+            let selfSender = self?.selfSender else {
+        return
+      }
+      
+      let latitude = selectedCoordinator.latitude
+      let longitude = selectedCoordinator.longitude
+      
+      let location = Location(location: CLLocation(latitude: latitude,
+                                                   longitude: longitude), size: .zero)
+      
+      let message = Message(sender: selfSender,
+                            messageId: messageId,
+                            sentDate: Date(),
+                            kind: .location(location))
+      
+      guard let otherUserEmail = self?.otherUserEmail else { return }
+      
+      DataBaseManager.shared.sendMessage(to: conversationId,
+                                         otherUserEmail: otherUserEmail,
+                                         name: name,
+                                         newMessage: message) { success in
+        
+      }
+    }
+    navigationController?.pushViewController(locationVC, animated: true)
   }
   
   private func presentPhotoInputActionSheet() {
@@ -313,6 +358,11 @@ extension ChatWithPersonViewController: InputBarAccessoryViewDelegate {
         
         if success {
           self?.isNewConversation = false
+          let messageId = message.messageId.replacingOccurrences(of: ".", with: "")
+          let newConversationId = "conversation_\(messageId)"
+          self?.conversationId = newConversationId
+          self?.listenForMessages(id: newConversationId, shouldScrollBotton: true)
+          self?.messageInputBar.inputTextView.text = nil
         } else {
           print("Failed to send")
         }
@@ -324,11 +374,12 @@ extension ChatWithPersonViewController: InputBarAccessoryViewDelegate {
       DataBaseManager.shared.sendMessage(to: conversationId,
                                          otherUserEmail: otherUserEmail,
                                          name: name,
-                                         newMessage: message) { success in
+                                         newMessage: message) { [weak self] success in
         if success {
-          
+          self?.messageInputBar.inputTextView.text = nil
+          print("Send Message")
         } else {
-          
+          print("failed Message")
         }
       }
     }
@@ -382,7 +433,69 @@ extension ChatWithPersonViewController: MessagesDataSource {
       break
     }
   }
-
+  
+  func backgroundColor(for message: MessageType,
+                       at indexPath: IndexPath,
+                       in messagesCollectionView: MessagesCollectionView) -> UIColor {
+    let sender = message.sender
+    if sender.senderId == selfSender?.senderId {
+      return .link
+    }
+    return .secondarySystemBackground
+  }
+  
+  func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+    let sender = message.sender
+    
+    if sender.senderId == selfSender?.senderId {
+      
+      if let currentUserImageUrl = self.senderPhotoUrl {
+        avatarView.sd_setImage(with: currentUserImageUrl, completed: nil)
+        
+      } else {
+        
+        guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return }
+        let safeEmail = DataBaseManager.safeEmail(email: email)
+        let path = "images/\(safeEmail)_profile_picture.png"
+        
+        StorageManager.shared.downloadURL(for: path) { [weak self] result in
+          switch result {
+          case .success(let url):
+            self?.senderPhotoUrl = url
+            DispatchQueue.main.async {
+              avatarView.sd_setImage(with: url, completed: nil)
+            }
+          case .failure(let error):
+            print(error)
+          }
+        }
+      }
+      
+    } else {
+      
+      if let otherUserPhotoUrl = self.otherPhotoUrl {
+        avatarView.sd_setImage(with: otherUserPhotoUrl, completed: nil)
+        
+      } else {
+        
+        let email = self.otherUserEmail
+        let safeEmail = DataBaseManager.safeEmail(email: email)
+        let path = "images/\(safeEmail)_profile_picture.png"
+        
+        StorageManager.shared.downloadURL(for: path) { [weak self] result in
+          switch result {
+          case .success(let url):
+            self?.otherPhotoUrl = url
+            DispatchQueue.main.async {
+              avatarView.sd_setImage(with: url, completed: nil)
+            }
+          case .failure(let error):
+            print(error)
+          }
+        }
+      }
+    }
+  }
 }
 
 extension ChatWithPersonViewController: MessagesLayoutDelegate {
@@ -395,6 +508,20 @@ extension ChatWithPersonViewController: MessagesDisplayDelegate {
 
 extension ChatWithPersonViewController: MessageCellDelegate {
   
+  func didTapMessage(in cell: MessageCollectionViewCell) {
+    guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
+    let message = messages[indexPath.section]
+    
+    switch message.kind {
+    case .location(let locationData):
+      let coordinates = locationData.location.coordinate
+      let locationVC = LocationPickerViewController(coordinates: coordinates, isPickable: false)
+      navigationController?.pushViewController(locationVC, animated: true)
+    default:
+      break
+    }
+  }
+  
   func didTapImage(in cell: MessageCollectionViewCell) {
     guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
     let message = messages[indexPath.section]
@@ -405,7 +532,7 @@ extension ChatWithPersonViewController: MessageCellDelegate {
       guard let imageUrl = media.url else { return }
       
       let photoVC = PhotoViewerViewController(with: imageUrl)
-      self.navigationController?.pushViewController(photoVC, animated: true)
+      navigationController?.pushViewController(photoVC, animated: true)
      
     case .video(let media):
       

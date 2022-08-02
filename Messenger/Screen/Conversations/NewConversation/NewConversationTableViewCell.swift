@@ -38,11 +38,9 @@ class NewConversationTableViewCell: UITableViewCell {
   }
   
   func configure(with model: NewConversationModel) {
+    let path = "images/\(model.email)_profile_picture.png"
     self.userNameLabel.text = model.name
     
-    let path = "images/\(model.email)_profile_picture.png"
-    
-    print(path)
     StorageManager.shared.downloadURL(for: path) { [weak self] result in
       switch result {
       case .success(let url):
@@ -64,9 +62,8 @@ class NewConversationTableViewCell: UITableViewCell {
   
   private func setupCellConstraints() {
     NSLayoutConstraint.activate([
-      userImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-      userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-      userImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+      userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+      userImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       userImageView.widthAnchor.constraint(equalToConstant: 70),
       userImageView.heightAnchor.constraint(equalToConstant: 70),
       

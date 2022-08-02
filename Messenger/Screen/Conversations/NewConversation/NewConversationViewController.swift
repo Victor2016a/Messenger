@@ -113,6 +113,7 @@ extension NewConversationViewController: UISearchBarDelegate {
         }
       }
     }
+    self.newConversationView.spinner.dismiss()
   }
   
   func filterUsers(with term: String) {
@@ -122,9 +123,7 @@ extension NewConversationViewController: UISearchBarDelegate {
     }
     
     let safeEmail = DataBaseManager.safeEmail(email: currentUserEmail)
-    
-    self.newConversationView.spinner.dismiss()
-    
+        
     let results: [NewConversationModel] = self.users.filter {
       
       guard let email = $0["email"],

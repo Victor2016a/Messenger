@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class RegisterViewController: UIViewController {
   let registerView = RegisterView()
@@ -50,22 +51,72 @@ class RegisterViewController: UIViewController {
     registerView.passwordTextField.resignFirstResponder()
     
     guard let firstName = registerView.firstNameTextField.text,
-          let lasteName = registerView.lastNameTextField.text,
+          let lastName = registerView.lastNameTextField.text,
           let email = registerView.emailTextField.text,
           let password = registerView.passwordTextField.text,
           !firstName.isEmpty,
-          !lasteName.isEmpty,
+          !lastName.isEmpty,
           !email.isEmpty,
           !password.isEmpty,
           password.count >= 6 else {
             alertUserLoginError()
             return
           }
+    
+    UserDefaults.standard.setValue(email, forKey: "email")
+    let name = firstName + " " + lastName
+    UserDefaults.standard.setValue(name, forKey: "name")
+    
+    registerView.spinner.show(in: view)
+    
+    DataBaseManager.shared.userExists(with: email) { [weak self] exists in
+      guard !exists else {
+        self?.alertUserLoginError(message: "Looks like a user account for that email address alredy exists")
+        return
+      }
+      
+      FirebaseAuth.Auth.auth().createUser(withEmail: email,
+                                          password: password) { [weak self] authResult, error in
+        
+        guard authResult != nil, error == nil else {
+          return
+        }
+                
+        let chatUser = MessengerModel(firstName: firstName,
+                                      lastName: lastName,
+                                      email: email)
+        
+        DataBaseManager.shared.insertUser(with: chatUser) { success in
+          if success {
+            guard let image = self?.registerView.profileImageView.image,
+                    let data = image.pngData() else {
+              return
+            }
+            
+            let fileName = chatUser.profilePictureFileName
+            StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName) { result in
+              switch result {
+              case .success(let downloadUrl):
+                UserDefaults.standard.setValue(downloadUrl, forKey: "profile_picture_url")
+              case .failure(let error):
+                print(error)
+              }
+            }
+          }
+        }
+        
+        DispatchQueue.main.async {
+          self?.registerView.spinner.dismiss(animated: true)
+        }
+        
+        self?.navigationController?.dismiss(animated: true)
+      }
+    }
   }
 
-  private func alertUserLoginError() {
+  private func alertUserLoginError(message: String = "Please, enter all information to create a new account.") {
     let alertError = UIAlertController(title: "Whoops!",
-                                       message: "Please, enter all information to create a new account.",
+                                       message: message,
                                        preferredStyle: .alert)
     
     alertError.addAction(UIAlertAction(title: "Dismiss",

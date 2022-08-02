@@ -8,8 +8,11 @@
 import UIKit
 import FBSDKLoginKit
 import GoogleSignIn
+import JGProgressHUD
 
 class LoginView: UIView {
+  let spinner = JGProgressHUD(style: .dark)
+  
   private let scrollView: UIScrollView = {
     let scrollView = UIScrollView()
     scrollView.translatesAutoresizingMaskIntoConstraints = false

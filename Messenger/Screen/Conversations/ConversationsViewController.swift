@@ -42,7 +42,7 @@ class ConversationsViewController: UIViewController {
       let navigantion = UINavigationController(rootViewController: loginVC)
       
       navigantion.modalPresentationStyle = .fullScreen
-      present(navigantion, animated: true)
+      present(navigantion, animated: false)
     }
   }
 }

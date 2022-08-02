@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseDatabase
 import MessageKit
+import CoreLocation
 
 final class DataBaseManager {
   static let shared = DataBaseManager()
@@ -24,7 +25,7 @@ final class DataBaseManager {
 extension DataBaseManager {
   
   public func getDataFor(path: String, completion: @escaping (Result<Any, Error>) -> Void) {
-    self.database.child("\(path)").observeSingleEvent(of: .value) { snapshot in
+    database.child("\(path)").observeSingleEvent(of: .value) { snapshot in
       guard let value = snapshot.value else {
         completion(.failure(DatabaseError.failedToFetch))
         return
@@ -36,7 +37,7 @@ extension DataBaseManager {
 
 
 extension DataBaseManager {
-  public func emailExists(with email: String, completion: @escaping ((Bool) -> Void)) {
+  public func userExists(with email: String, completion: @escaping ((Bool) -> Void)) {
     
     let safeEmail = DataBaseManager.safeEmail(email: email)
     
@@ -53,14 +54,14 @@ extension DataBaseManager {
     database.child(user.safeEmail).setValue([
       "first_name": user.firstName,
       "last_name": user.lastName
-    ]) { error, _ in
+    ]) { [weak self] error, _ in
       guard error == nil else {
         print("Failed to write to database")
         completion(false)
         return
       }
       
-      self.database.child("users").observeSingleEvent(of: .value) { snapShot in
+      self?.database.child("users").observeSingleEvent(of: .value) { [weak self] snapShot in
         if var usersCollection = snapShot.value as? [[String: String]] {
           
           let newElement = [
@@ -70,7 +71,7 @@ extension DataBaseManager {
 
           usersCollection.append(newElement)
 
-          self.database.child("users").setValue(usersCollection) { error, _ in
+          self?.database.child("users").setValue(usersCollection) { error, _ in
             guard error == nil else {
               completion(false)
               return
@@ -87,7 +88,7 @@ extension DataBaseManager {
             ]
           ]
   
-          self.database.child("users").setValue(newCollection) { error, _ in
+          self?.database.child("users").setValue(newCollection) { error, _ in
             guard error == nil else {
               return
             }
@@ -125,9 +126,9 @@ extension DataBaseManager {
     
     guard let currentEmail = UserDefaults.standard.value(forKey: "email") as? String,
           let currentName = UserDefaults.standard.value(forKey: "name") as? String else {
+      
       return
     }
-    
     let safeEmail = DataBaseManager.safeEmail(email: currentEmail)
     let reference = database.child(safeEmail)
     
@@ -384,6 +385,18 @@ extension DataBaseManager {
                             size: CGSize(width: 300, height: 300))
           kind = .video(media)
            
+        } else if type == "location" {
+          let locationComponents = content.components(separatedBy: ",")
+          guard let longitude = Double(locationComponents[0]),
+                let latitude = Double(locationComponents[1]) else {
+            return nil
+          }
+          
+          let location = Location(location: CLLocation(latitude: latitude,
+                                                       longitude: longitude),
+                                  size: CGSize(width: 300, height: 300))
+          kind = .location(location)
+          
         } else {
           kind = .text(content)
         }
@@ -419,7 +432,7 @@ extension DataBaseManager {
     
     let currentEmail = DataBaseManager.safeEmail(email: myEmail)
     
-    self.database.child("\(conversation)/messages").observeSingleEvent(of: .value) { [weak self] snapshot in
+    database.child("\(conversation)/messages").observeSingleEvent(of: .value) { [weak self] snapshot in
       guard var currentMessages = snapshot.value as? [[String: Any]] else {
         completion(false)
         return
@@ -445,7 +458,9 @@ extension DataBaseManager {
           message = targetUrlString
         }
         break
-      case .location(_):
+      case .location(let locationData):
+        let location = locationData.location
+        message = "\(location.coordinate.longitude),\(location.coordinate.latitude)"
         break
       case .emoji(_):
         break

@@ -14,7 +14,7 @@ class ChatsTableViewCell: UITableViewCell {
   private let userImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .scaleAspectFill
-    imageView.layer.cornerRadius = 50
+    imageView.layer.cornerRadius = 45
     imageView.layer.masksToBounds = true
     imageView.translatesAutoresizingMaskIntoConstraints = false
     return imageView
@@ -46,8 +46,9 @@ class ChatsTableViewCell: UITableViewCell {
   }
   
   func configure(with model: ChatModel) {
-    self.userNameLabel.text = model.name
-    self.userMessageLabel.text = model.latestMessage.text
+    contentView.backgroundColor = .secondarySystemBackground
+    userNameLabel.text = model.name
+    userMessageLabel.text = model.latestMessage.text
     
     let path = "images/\(model.otherUserEmail)_profile_picture.png"
     
@@ -74,20 +75,20 @@ class ChatsTableViewCell: UITableViewCell {
   
   private func setupCellConstraints() {
     NSLayoutConstraint.activate([
-      userImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-      userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-      userImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-      userImageView.widthAnchor.constraint(equalToConstant: 100),
-      userImageView.heightAnchor.constraint(equalToConstant: 100),
+      userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+      userImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      userImageView.widthAnchor.constraint(equalToConstant: 90),
+      userImageView.heightAnchor.constraint(equalToConstant: 90),
       
-      userNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-      userNameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 10),
+      userNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+      userNameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 15),
       userNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+      userNameLabel.heightAnchor.constraint(equalToConstant: 40),
       
       userMessageLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 5),
-      userMessageLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 10),
+      userMessageLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 15),
       userMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-      userMessageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+      userMessageLabel.heightAnchor.constraint(equalToConstant: 40)
     ])
   }
 }

@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class ChatsView: UIView {
+  let spinner = JGProgressHUD(style: .dark)
+  
   let tableView: UITableView = {
     let tableView = UITableView()
     tableView.translatesAutoresizingMaskIntoConstraints = false
