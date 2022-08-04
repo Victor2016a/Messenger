@@ -48,7 +48,19 @@ class ChatsTableViewCell: UITableViewCell {
   func configure(with model: ChatModel) {
     contentView.backgroundColor = .secondarySystemBackground
     userNameLabel.text = model.name
-    userMessageLabel.text = model.latestMessage.text
+    
+    let type = model.latestMessage.type
+    
+    switch type {
+    case "photo":
+      userMessageLabel.text = "Photo"
+    case "video":
+      userMessageLabel.text = "Video"
+    case "location":
+      userMessageLabel.text = "Location"
+    default:
+      userMessageLabel.text = model.latestMessage.text
+    }
     
     let path = "images/\(model.otherUserEmail)_profile_picture.png"
     

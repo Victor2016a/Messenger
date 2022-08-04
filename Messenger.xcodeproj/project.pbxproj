@@ -16,7 +16,6 @@
 		13267C2F285A198700A02FFE /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13267C2E285A198700A02FFE /* StorageManager.swift */; };
 		133947EC285373B9002A4BA3 /* MessengerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947EB285373B9002A4BA3 /* MessengerModel.swift */; };
 		133947EE28537456002A4BA3 /* DataBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947ED28537456002A4BA3 /* DataBaseManager.swift */; };
-		133947F32853749B002A4BA3 /* ConversationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947F22853749B002A4BA3 /* ConversationsView.swift */; };
 		133947F5285374AA002A4BA3 /* ConversationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947F4285374AA002A4BA3 /* ConversationsViewController.swift */; };
 		133947F7285374BE002A4BA3 /* ChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947F6285374BE002A4BA3 /* ChatsView.swift */; };
 		133947F9285374C7002A4BA3 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133947F8285374C7002A4BA3 /* ChatsViewController.swift */; };
@@ -42,7 +41,6 @@
 		138722DA28804EFB0064CE2C /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138722D928804EFB0064CE2C /* PhotoView.swift */; };
 		138722DC2881C8F50064CE2C /* NewConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138722DB2881C8F50064CE2C /* NewConversationTableViewCell.swift */; };
 		138722DE2881CBC30064CE2C /* NewConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138722DD2881CBC30064CE2C /* NewConversationModel.swift */; };
-		13E4259728576DFE00D9CB6D /* ChatWithPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259628576DFE00D9CB6D /* ChatWithPersonView.swift */; };
 		13E4259928576E2100D9CB6D /* ChatWithPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259828576E2100D9CB6D /* ChatWithPersonViewController.swift */; };
 		13E4259B2857726300D9CB6D /* ChatWithPersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259A2857726300D9CB6D /* ChatWithPersonModel.swift */; };
 		13E4259E2857863E00D9CB6D /* NewConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4259D2857863E00D9CB6D /* NewConversationView.swift */; };
@@ -61,7 +59,6 @@
 		13267C2E285A198700A02FFE /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		133947EB285373B9002A4BA3 /* MessengerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessengerModel.swift; sourceTree = "<group>"; };
 		133947ED28537456002A4BA3 /* DataBaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBaseManager.swift; sourceTree = "<group>"; };
-		133947F22853749B002A4BA3 /* ConversationsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsView.swift; sourceTree = "<group>"; };
 		133947F4285374AA002A4BA3 /* ConversationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsViewController.swift; sourceTree = "<group>"; };
 		133947F6285374BE002A4BA3 /* ChatsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatsView.swift; sourceTree = "<group>"; };
 		133947F8285374C7002A4BA3 /* ChatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
@@ -83,7 +80,6 @@
 		138722D928804EFB0064CE2C /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
 		138722DB2881C8F50064CE2C /* NewConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationTableViewCell.swift; sourceTree = "<group>"; };
 		138722DD2881CBC30064CE2C /* NewConversationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationModel.swift; sourceTree = "<group>"; };
-		13E4259628576DFE00D9CB6D /* ChatWithPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWithPersonView.swift; sourceTree = "<group>"; };
 		13E4259828576E2100D9CB6D /* ChatWithPersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWithPersonViewController.swift; sourceTree = "<group>"; };
 		13E4259A2857726300D9CB6D /* ChatWithPersonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWithPersonModel.swift; sourceTree = "<group>"; };
 		13E4259D2857863E00D9CB6D /* NewConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationView.swift; sourceTree = "<group>"; };
@@ -182,7 +178,6 @@
 		1339480A2853770D002A4BA3 /* Conversations */ = {
 			isa = PBXGroup;
 			children = (
-				133947F22853749B002A4BA3 /* ConversationsView.swift */,
 				133947F4285374AA002A4BA3 /* ConversationsViewController.swift */,
 				133948082853764D002A4BA3 /* Chats */,
 				13E4259C285785E900D9CB6D /* NewConversation */,
@@ -242,7 +237,6 @@
 			isa = PBXGroup;
 			children = (
 				13E4259A2857726300D9CB6D /* ChatWithPersonModel.swift */,
-				13E4259628576DFE00D9CB6D /* ChatWithPersonView.swift */,
 				13E4259828576E2100D9CB6D /* ChatWithPersonViewController.swift */,
 				138722D828804ED90064CE2C /* Photo */,
 				137CA15928901A4B00228326 /* Location */,
@@ -435,11 +429,9 @@
 				137CA151288ADB5300228326 /* LoginView.swift in Sources */,
 				137CA15B28901A7200228326 /* LocationPickerViewController.swift in Sources */,
 				1303E33B283BC888005BE248 /* NewConversationViewController.swift in Sources */,
-				133947F32853749B002A4BA3 /* ConversationsView.swift in Sources */,
 				133947F9285374C7002A4BA3 /* ChatsViewController.swift in Sources */,
 				1378C4B9286DFE6500E20BF5 /* ChatsModel.swift in Sources */,
 				137CA15D28901B5000228326 /* LocationView.swift in Sources */,
-				13E4259728576DFE00D9CB6D /* ChatWithPersonView.swift in Sources */,
 				137CA1612891800000228326 /* ProfileTableViewCell.swift in Sources */,
 				133947FD28537506002A4BA3 /* ProfileViewController.swift in Sources */,
 				133947FB285374FA002A4BA3 /* ProfileView.swift in Sources */,

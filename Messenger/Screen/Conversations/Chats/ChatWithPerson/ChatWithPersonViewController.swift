@@ -111,7 +111,6 @@ class ChatWithPersonViewController: MessagesViewController {
     locationVC.completion = { [weak self] selectedCoordinator in
       
       guard let messageId = self?.createMessageId(),
-            let conversationId = self?.conversationId,
             let name = self?.title,
             let selfSender = self?.selfSender else {
         return
@@ -128,13 +127,38 @@ class ChatWithPersonViewController: MessagesViewController {
                             sentDate: Date(),
                             kind: .location(location))
       
+      guard let isNewConversation = self?.isNewConversation else { return }
       guard let otherUserEmail = self?.otherUserEmail else { return }
       
-      DataBaseManager.shared.sendMessage(to: conversationId,
-                                         otherUserEmail: otherUserEmail,
-                                         name: name,
-                                         newMessage: message) { success in
+      if isNewConversation {
         
+        DataBaseManager.shared.createNewConversation(with: otherUserEmail,
+                                                     name: self?.title ?? "User",
+                                                     firstMessage: message) { [weak self] success in
+          
+          if success {
+            self?.isNewConversation = false
+            let messageId = message.messageId.replacingOccurrences(of: ".", with: "")
+            let newConversationId = "conversation_\(messageId)"
+            self?.conversationId = newConversationId
+            self?.listenForMessages(id: newConversationId, shouldScrollBotton: true)
+          } else {
+            print("Failed to send")
+          }
+        }
+      } else {
+        
+        guard let conversationId = self?.conversationId else { return }
+        DataBaseManager.shared.sendMessage(to: conversationId,
+                                           otherUserEmail: otherUserEmail,
+                                           name: name,
+                                           newMessage: message) { success in
+          if success {
+            print("Success in location")
+          } else {
+            print("Failed Location")
+          }
+        }
       }
     }
     navigationController?.pushViewController(locationVC, animated: true)
@@ -260,7 +284,6 @@ extension ChatWithPersonViewController: UIImagePickerControllerDelegate, UINavig
     picker.dismiss(animated: true)
     
     guard let messageId = createMessageId(),
-          let conversationId = conversationId,
           let name = self.title,
           let selfSender = selfSender else {
       return
@@ -291,8 +314,37 @@ extension ChatWithPersonViewController: UIImagePickerControllerDelegate, UINavig
                                 sentDate: Date(),
                                 kind: .photo(media))
           
-          DataBaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, name: name, newMessage: message) { success in
+          guard let isNewConversation = self?.isNewConversation else { return }
+          
+          if isNewConversation {
             
+            DataBaseManager.shared.createNewConversation(with: otherUserEmail,
+                                                         name: self?.title ?? "User",
+                                                         firstMessage: message) { [weak self] success in
+              
+              if success {
+                self?.isNewConversation = false
+                let messageId = message.messageId.replacingOccurrences(of: ".", with: "")
+                let newConversationId = "conversation_\(messageId)"
+                self?.conversationId = newConversationId
+                self?.listenForMessages(id: newConversationId, shouldScrollBotton: true)
+              } else {
+                print("Failed to send")
+              }
+            }
+          } else {
+            
+            guard let conversationId = self?.conversationId else { return }
+            DataBaseManager.shared.sendMessage(to: conversationId,
+                                               otherUserEmail: otherUserEmail,
+                                               name: name,
+                                               newMessage: message) { success in
+              if success {
+                print("Success in Photo")
+              } else {
+                print("Failed Photo")
+              }
+            }
           }
           
         case .failure(let error):
@@ -323,8 +375,37 @@ extension ChatWithPersonViewController: UIImagePickerControllerDelegate, UINavig
                                 sentDate: Date(),
                                 kind: .video(media))
           
-          DataBaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, name: name, newMessage: message) { success in
+          guard let isNewConversation = self?.isNewConversation else { return }
+          
+          if isNewConversation {
             
+            DataBaseManager.shared.createNewConversation(with: otherUserEmail,
+                                                         name: self?.title ?? "User",
+                                                         firstMessage: message) { [weak self] success in
+              
+              if success {
+                self?.isNewConversation = false
+                let messageId = message.messageId.replacingOccurrences(of: ".", with: "")
+                let newConversationId = "conversation_\(messageId)"
+                self?.conversationId = newConversationId
+                self?.listenForMessages(id: newConversationId, shouldScrollBotton: true)
+              } else {
+                print("Failed to send")
+              }
+            }
+          } else {
+            
+            guard let conversationId = self?.conversationId else { return }
+            DataBaseManager.shared.sendMessage(to: conversationId,
+                                               otherUserEmail: otherUserEmail,
+                                               name: name,
+                                               newMessage: message) { success in
+              if success {
+                print("Success in Video")
+              } else {
+                print("Failed Video")
+              }
+            }
           }
           
         case .failure(let error):
@@ -547,5 +628,4 @@ extension ChatWithPersonViewController: MessageCellDelegate {
       break
     }
   }
-  
 }

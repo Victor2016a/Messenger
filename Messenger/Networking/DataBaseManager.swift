@@ -149,11 +149,19 @@ extension DataBaseManager {
         message = messageText
       case .attributedText(_):
         break
-      case .photo(_):
+      case .photo(let mediaItem):
+        if let targetUrlString = mediaItem.url?.absoluteString {
+          message = targetUrlString
+        }
         break
-      case .video(_):
+      case .video(let mediaItem):
+        if let targetUrlString = mediaItem.url?.absoluteString {
+          message = targetUrlString
+        }
         break
-      case .location(_):
+      case .location(let locationData):
+        let location = locationData.location
+        message = "\(location.coordinate.longitude),\(location.coordinate.latitude)"
         break
       case .emoji(_):
         break
@@ -178,6 +186,7 @@ extension DataBaseManager {
         "latest_message": [
           "date": dateString,
           "message": message,
+          "type": firstMessage.kind.messageKindString,
           "is_read": false
         ]
       ]
@@ -189,6 +198,7 @@ extension DataBaseManager {
         "latest_message": [
           "date": dateString,
           "message": message,
+          "type": firstMessage.kind.messageKindString,
           "is_read": false
         ]
       ]
@@ -254,11 +264,19 @@ extension DataBaseManager {
       content = messageText
     case .attributedText(_):
       break
-    case .photo(_):
+    case .photo(let mediaItem):
+      if let targetUrlString = mediaItem.url?.absoluteString {
+        content = targetUrlString
+      }
       break
-    case .video(_):
+    case .video(let mediaItem):
+      if let targetUrlString = mediaItem.url?.absoluteString {
+        content = targetUrlString
+      }
       break
-    case .location(_):
+    case .location(let locationData):
+      let location = locationData.location
+      content = "\(location.coordinate.longitude),\(location.coordinate.latitude)"
       break
     case .emoji(_):
       break
@@ -318,6 +336,7 @@ extension DataBaseManager {
               let otherUserEmail = dictionary["other_user_email"] as? String,
               let latestMessage = dictionary["latest_message"] as? [String: Any],
               let date = latestMessage["date"] as? String,
+              let type = latestMessage["type"] as? String,
               let message = latestMessage["message"] as? String,
               let isRead = latestMessage["is_read"] as? Bool else {
           return nil
@@ -325,6 +344,7 @@ extension DataBaseManager {
         
         let lastMessageObject = LatestMessage(date: date,
                                               text: message,
+                                              type: type,
                                               isRead: isRead)
         
         return ChatModel(id: conversationId,
@@ -501,6 +521,7 @@ extension DataBaseManager {
           let updateValue: [String: Any] = [
             "date": dateString,
             "is_read": false,
+            "type": newMessage.kind.messageKindString,
             "message": message
           ]
           if var currentUserConversations = snapshot.value as? [[String: Any]] {

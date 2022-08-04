@@ -60,7 +60,6 @@ extension NewConversationViewController: UITableViewDataSource {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: NewConversationTableViewCell.identifier, for: indexPath) as? NewConversationTableViewCell else {
       return .init()
     }
-    
     cell.configure(with: model)
     return cell
   }

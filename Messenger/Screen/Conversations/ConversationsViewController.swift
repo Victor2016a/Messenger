@@ -27,7 +27,9 @@ class ConversationsViewController: UIViewController {
     let profileVC = UINavigationController(rootViewController: ProfileViewController())
     
     chatsVC.tabBarItem.image = UIImage(systemName: "message")
+    chatsVC.title = "Chats"
     profileVC.tabBarItem.image = UIImage(systemName: "person")
+    profileVC.title = "Profile"
     
     tabBarVC.setViewControllers([chatsVC,profileVC], animated: false)
     tabBarVC.modalPresentationStyle = .fullScreen

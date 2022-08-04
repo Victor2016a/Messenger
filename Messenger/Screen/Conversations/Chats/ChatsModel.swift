@@ -17,5 +17,6 @@ struct ChatModel {
 struct LatestMessage {
   let date: String
   let text: String
+  let type: String
   let isRead: Bool
 }
