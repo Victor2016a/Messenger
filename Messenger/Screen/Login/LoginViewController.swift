@@ -72,6 +72,25 @@ class LoginViewController: UIViewController {
       
       UserDefaults.standard.setValue(email, forKey: "email")
       
+      let safeEmail = DataBaseManager.safeEmail(email: email)
+      
+      DataBaseManager.shared.getUserName(with: safeEmail) { result in
+        switch result {
+        case .success(let collection):
+          
+          guard let firstName = collection["first_name"] as? String,
+                let lastName = collection["last_name"] as? String else {
+            return
+          }
+          
+          let name = firstName + " " + lastName
+          UserDefaults.standard.setValue(name, forKey: "name")
+          
+        case .failure(let error):
+          print(error)
+        }
+      }
+      
       print("Login In user: \(user)")
       
       DispatchQueue.main.async {

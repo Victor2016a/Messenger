@@ -112,8 +112,22 @@ extension DataBaseManager {
     }
   }
   
+  public func getUserName(with email: String,
+                          completion: @escaping (Result<[String: Any], Error>) -> Void) {
+    
+    database.child(email).observeSingleEvent(of: .value) { snapshot in
+      guard let value = snapshot.value as? [String: Any] else {
+        completion(.failure(DatabaseError.failedToFetchNameFirebase))
+        return
+      }
+      
+      completion(.success(value))
+    }
+  }
+  
   public enum DatabaseError: Error {
     case failedToFetch
+    case failedToFetchNameFirebase
   }
 }
 
