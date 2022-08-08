@@ -65,6 +65,7 @@ class LoginViewController: UIViewController {
                                     password: password) { [weak self] authResult, error in
       
       guard let result = authResult, error == nil else {
+        self?.alertLoginErrorEmailPassword()
         return
       }
       
@@ -180,6 +181,17 @@ class LoginViewController: UIViewController {
   private func alertUserLoginError() {
     let alertError = UIAlertController(title: "Whoops!",
                                        message: "Please, enter all information to log in.",
+                                       preferredStyle: .alert)
+    
+    alertError.addAction(UIAlertAction(title: "Dismiss",
+                                       style: .cancel))
+    present(alertError, animated: true)
+  }
+  
+  private func alertLoginErrorEmailPassword() {
+    loginView.spinner.dismiss(animated: true)
+    let alertError = UIAlertController(title: "Whoops!",
+                                       message: "Email or Password incorrect.",
                                        preferredStyle: .alert)
     
     alertError.addAction(UIAlertAction(title: "Dismiss",

@@ -10,6 +10,14 @@ import SDWebImage
 
 class NewConversationTableViewCell: UITableViewCell {
   static let identifier = "NewConversationTableViewCell"
+  
+  private let spinner: UIActivityIndicatorView = {
+    let spinner = UIActivityIndicatorView()
+    spinner.style = .medium
+    spinner.startAnimating()
+    spinner.translatesAutoresizingMaskIntoConstraints = false
+    return spinner
+  }()
     
   private let userImageView: UIImageView = {
     let imageView = UIImageView()
@@ -46,22 +54,30 @@ class NewConversationTableViewCell: UITableViewCell {
       case .success(let url):
         ImageProvider.shared.fecthImage(url: url) { image in
           DispatchQueue.main.async {
+            self?.spinner.stopAnimating()
             self?.userImageView.image = image
           }
         }
       case .failure(let error):
+        self?.spinner.stopAnimating()
         print(error)
       }
     }
   }
   
   private func setupCell() {
+    contentView.addSubview(spinner)
     contentView.addSubview(userImageView)
     contentView.addSubview(userNameLabel)
   }
   
   private func setupCellConstraints() {
     NSLayoutConstraint.activate([
+      spinner.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+      spinner.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      spinner.widthAnchor.constraint(equalToConstant: 70),
+      spinner.heightAnchor.constraint(equalToConstant: 70),
+      
       userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
       userImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       userImageView.widthAnchor.constraint(equalToConstant: 70),

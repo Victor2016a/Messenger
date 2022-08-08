@@ -10,6 +10,14 @@ import SDWebImage
 
 class ChatsTableViewCell: UITableViewCell {
   static let identifier = "ChatsTableViewCell"
+  
+  private let spinner: UIActivityIndicatorView = {
+    let spinner = UIActivityIndicatorView()
+    spinner.style = .medium
+    spinner.startAnimating()
+    spinner.translatesAutoresizingMaskIntoConstraints = false
+    return spinner
+  }()
     
   private let userImageView: UIImageView = {
     let imageView = UIImageView()
@@ -80,6 +88,7 @@ class ChatsTableViewCell: UITableViewCell {
   }
   
   private func setupCell() {
+    contentView.addSubview(spinner)
     contentView.addSubview(userImageView)
     contentView.addSubview(userNameLabel)
     contentView.addSubview(userMessageLabel)
@@ -87,6 +96,11 @@ class ChatsTableViewCell: UITableViewCell {
   
   private func setupCellConstraints() {
     NSLayoutConstraint.activate([
+      spinner.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+      spinner.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      spinner.widthAnchor.constraint(equalToConstant: 90),
+      spinner.heightAnchor.constraint(equalToConstant: 90),
+      
       userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
       userImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       userImageView.widthAnchor.constraint(equalToConstant: 90),

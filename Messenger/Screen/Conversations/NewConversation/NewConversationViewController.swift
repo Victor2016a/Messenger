@@ -90,13 +90,11 @@ extension NewConversationViewController: UISearchBarDelegate {
     
     results.removeAll()
     newConversationView.spinner.show(in: view)
-    self.searchUsers(query: text)
+    searchUsers(query: text)
   }
   
   func searchUsers(query: String) {
-    
     if hasFetch {
-      
       filterUsers(with: query)
       
     } else {
@@ -112,7 +110,10 @@ extension NewConversationViewController: UISearchBarDelegate {
         }
       }
     }
-    self.newConversationView.spinner.dismiss()
+    
+    DispatchQueue.main.async {
+      self.newConversationView.spinner.dismiss()
+    }
   }
   
   func filterUsers(with term: String) {

@@ -11,6 +11,7 @@ class ProfileTableViewCell: UITableViewCell {
   static let identifier = "ProfileTableViewCell"
   
   func configure(with profileModel: ProfileModel) {
+    contentView.backgroundColor = .secondarySystemBackground
     self.textLabel?.text = profileModel.title
     
     switch profileModel.modelType {

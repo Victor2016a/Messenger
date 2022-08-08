@@ -51,7 +51,7 @@ class ProfileViewController: UIViewController {
                                      title: "Log Out",
                                      handler: { [weak self] in
       
-      let actionSheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+      let actionSheet = UIAlertController(title: "Are you sure want to log out?", message: "Presse button Log out to log out.", preferredStyle: .actionSheet)
       
       actionSheet.addAction(UIAlertAction(title: "Log out",
                                           style: .destructive,
@@ -80,7 +80,6 @@ class ProfileViewController: UIViewController {
         catch {
           print("Falied Log out")
         }
-        
       }))
       
       actionSheet.addAction(UIAlertAction(title: "Cancel",
@@ -113,7 +112,7 @@ extension ProfileViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     guard let headerProfile = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderTableView.identifier) as? ProfileHeaderTableView else { return .init() }
     
-    headerProfile.spinner.show(in: headerProfile)
+    headerProfile.spinner.show(in: headerProfile.imageView)
     
     guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return .init() }
     guard let name = UserDefaults.standard.value(forKey: "name") as? String else { return .init() }
