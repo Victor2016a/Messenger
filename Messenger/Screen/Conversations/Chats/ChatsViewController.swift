@@ -16,13 +16,17 @@ class ChatsViewController: UIViewController {
     view = chatView
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+      startListeningForConversations()
+      setupNavigation()
+      setupTableView()
+      setupNotification()
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
-    startListeningForConversations()
-    setupNavigation()
-    setupTableView()
-    setupNotification()
   }
   
   private var loginObserver: NSObjectProtocol?
@@ -31,7 +35,8 @@ class ChatsViewController: UIViewController {
     let nameNotification = Notification.Name("didLogInNotification")
     loginObserver = NotificationCenter.default.addObserver(forName: nameNotification,
                                                            object: nil,
-                                                           queue: .main, using: { [weak self] _ in
+                                                           queue: .main,
+                                                           using: { [weak self] _ in
       self?.navigationController?.dismiss(animated: true)
     })
   }
@@ -90,8 +95,7 @@ class ChatsViewController: UIViewController {
       if let targetConversation = self?.conversations.first(where: {
         $0.otherUserEmail == DataBaseManager.safeEmail(email: result.email)
       }) {
-        let chatsWithPersonVC = ChatWithPersonViewController(email: targetConversation.otherUserEmail,
-                                                             id: targetConversation.id)
+        let chatsWithPersonVC = ChatWithPersonViewController(email: targetConversation.otherUserEmail, id: targetConversation.id)
         chatsWithPersonVC.isNewConversation = false
         chatsWithPersonVC.title = targetConversation.name
         chatsWithPersonVC.navigationItem.largeTitleDisplayMode = .never

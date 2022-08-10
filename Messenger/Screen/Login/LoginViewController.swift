@@ -304,7 +304,7 @@ extension LoginViewController: LoginButtonDelegate {
         DispatchQueue.main.async {
           self?.loginView.spinner.dismiss(animated: true)
         }
-        
+
         self?.navigationController?.dismiss(animated: true)
       }
     }

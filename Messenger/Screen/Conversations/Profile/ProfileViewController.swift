@@ -75,7 +75,9 @@ class ProfileViewController: UIViewController {
           let navigantion = UINavigationController(rootViewController: loginVC)
           
           navigantion.modalPresentationStyle = .fullScreen
-          self?.present(navigantion, animated: true)
+          self?.present(navigantion, animated: true, completion: {
+            self?.tabBarController?.selectedIndex = 0
+          })
         }
         catch {
           print("Falied Log out")
