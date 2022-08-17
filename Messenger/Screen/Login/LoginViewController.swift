@@ -98,7 +98,6 @@ class LoginViewController: UIViewController {
         self?.loginView.spinner.dismiss(animated: true)
       }
       NotificationCenter.default.post(name: Notification.Name("LogIn"), object: nil)
-      NotificationCenter.default.post(name: Notification.Name("ProfileSetup"), object: nil)
       self?.navigationController?.dismiss(animated: true)
     }
   }
@@ -175,7 +174,6 @@ class LoginViewController: UIViewController {
           self?.loginView.spinner.dismiss(animated: true)
         }
         NotificationCenter.default.post(name: Notification.Name("LogIn"), object: nil)
-        NotificationCenter.default.post(name: Notification.Name("ProfileSetup"), object: nil)
         self?.navigationController?.dismiss(animated: true)
       }
     }
@@ -308,7 +306,6 @@ extension LoginViewController: LoginButtonDelegate {
           self?.loginView.spinner.dismiss(animated: true)
         }
         NotificationCenter.default.post(name: Notification.Name("LogIn"), object: nil)
-        NotificationCenter.default.post(name: Notification.Name("ProfileSetup"), object: nil)
         self?.navigationController?.dismiss(animated: true)
       }
     }
