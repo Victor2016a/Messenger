@@ -592,6 +592,7 @@ extension DataBaseManager {
           let updateValue: [String: Any] = [
             "date": dateString,
             "is_read": false,
+            "type": newMessage.kind.messageKindString,
             "message": message
           ]
           var databaseEntryConversations = [[String: Any]]()

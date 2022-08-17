@@ -14,10 +14,20 @@ class ProfileViewController: UIViewController {
   var profileView = ProfileView()
   var modelMessenger = [MessengerModel]()
   var modelProfile = [ProfileModel]()
+  var sameEmailUser = ""
   
   override func loadView() {
     super.loadView()
     view = profileView
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return }
+    if sameEmailUser != email {
+      configureTableView()
+      sameEmailUser = email
+    }
   }
   
   override func viewDidLoad() {
@@ -25,7 +35,16 @@ class ProfileViewController: UIViewController {
     view.backgroundColor = .systemBlue
     setupNavigation()
     setupTableView()
-    configureTableView()
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(assingEmptyHeaderTableView),
+                                           name:Notification.Name("AssingEmptyHeaderTableView"), object: nil)
+  }
+  
+  @objc func assingEmptyHeaderTableView() {
+    modelMessenger = []
+    DispatchQueue.main.async { [weak self] in
+      self?.profileView.tableView.reloadData()
+    }
   }
   
   private func setupNavigation() {
@@ -43,6 +62,7 @@ class ProfileViewController: UIViewController {
     
     profileView.tableView.dataSource = self
     profileView.tableView.delegate = self
+    profileView.tableView.reloadData()
   }
   
   private func setupTableView() {
@@ -73,9 +93,10 @@ class ProfileViewController: UIViewController {
           try FirebaseAuth.Auth.auth().signOut()
           let loginVC = LoginViewController()
           let navigantion = UINavigationController(rootViewController: loginVC)
-          
+          NotificationCenter.default.post(name: Notification.Name("AssingEmptyTableView"), object: nil)
+          NotificationCenter.default.post(name: Notification.Name("AssingEmptyHeaderTableView"), object: nil)
           navigantion.modalPresentationStyle = .fullScreen
-          self?.present(navigantion, animated: true, completion: {
+          self?.present(navigantion, animated: false, completion: {
             self?.tabBarController?.selectedIndex = 0
           })
         }
@@ -117,6 +138,7 @@ extension ProfileViewController: UITableViewDelegate {
     headerProfile.spinner.show(in: headerProfile.imageView)
     
     guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return .init() }
+    sameEmailUser = email
     guard let name = UserDefaults.standard.value(forKey: "name") as? String else { return .init() }
     
     let safeEmail = DataBaseManager.safeEmail(email: email)

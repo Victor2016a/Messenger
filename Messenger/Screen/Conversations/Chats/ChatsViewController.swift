@@ -16,17 +16,29 @@ class ChatsViewController: UIViewController {
     view = chatView
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-      startListeningForConversations()
-      setupNavigation()
-      setupTableView()
-      setupNotification()
-  }
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(assingEmptyTableView),
+                                           name: Notification.Name("AssingEmptyTableView"),
+                                           object: nil)
+    
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(startListeningForConversations),
+                                           name: Notification.Name("LogIn"),
+                                           object: nil)
+    setupNavigation()
+    setupTableView()
+    setupNotification()
+  }
+  
+  @objc func assingEmptyTableView() {
+    conversations = []
+    DispatchQueue.main.async { [weak self] in
+      self?.chatView.tableView.reloadData()
+      self?.chatView.tableView.isHidden = true
+    }
   }
   
   private var loginObserver: NSObjectProtocol?
@@ -49,33 +61,34 @@ class ChatsViewController: UIViewController {
                                                         action: #selector(didTapCompose))
   }
   
-  private func startListeningForConversations() {
-    chatView.spinner.show(in: view)
+  @objc func startListeningForConversations() {
     guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return }
     
+    chatView.spinner.show(in: view)
     if let loginObserver = loginObserver {
       NotificationCenter.default.removeObserver(loginObserver)
     }
     
     let safeEmail = DataBaseManager.safeEmail(email: email)
-
+    
     DataBaseManager.shared.getAllConversations(for: safeEmail) { [weak self] result in
       switch result {
       case .success(let conversations):
         guard !conversations.isEmpty else {
+          print(conversations)
           self?.chatView.spinner.dismiss(animated: true)
           self?.chatView.tableView.isHidden = true
           self?.chatView.noConversationsLabel.isHidden = false
           return
         }
-        
-        self?.chatView.noConversationsLabel.isHidden = true
-        self?.chatView.tableView.isHidden = false
+        print(conversations)
         self?.conversations = conversations
         
         DispatchQueue.main.async {
           self?.chatView.spinner.dismiss(animated: true)
           self?.chatView.tableView.reloadData()
+          self?.chatView.noConversationsLabel.isHidden = true
+          self?.chatView.tableView.isHidden = false
         }
         
       case .failure(let error):
@@ -154,7 +167,6 @@ extension ChatsViewController: UITableViewDataSource {
       
     let model = conversations[indexPath.row]
     cell.configure(with: model)
-  
     return cell
   }
 }

@@ -52,6 +52,12 @@ class ProfileHeaderTableView: UITableViewHeaderFooterView {
     }
   }
   
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    imageView.image = nil
+    nameLabel.text = nil
+  }
+  
   private func setupView() {
     contentView.addSubview(imageView)
     contentView.addSubview(nameLabel)

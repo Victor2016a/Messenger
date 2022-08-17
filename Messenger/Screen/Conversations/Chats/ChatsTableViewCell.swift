@@ -43,6 +43,11 @@ class ChatsTableViewCell: UITableViewCell {
     return label
   }()
   
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    userImageView.image = nil
+  }
+  
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupCell()
