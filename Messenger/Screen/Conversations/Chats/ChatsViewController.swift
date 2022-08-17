@@ -28,6 +28,7 @@ class ChatsViewController: UIViewController {
                                            selector: #selector(startListeningForConversations),
                                            name: Notification.Name("LogIn"),
                                            object: nil)
+    startListeningForConversations()
     setupNavigation()
     setupTableView()
     setupNotification()

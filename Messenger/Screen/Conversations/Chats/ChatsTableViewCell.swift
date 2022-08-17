@@ -46,6 +46,7 @@ class ChatsTableViewCell: UITableViewCell {
   override func prepareForReuse() {
     super.prepareForReuse()
     userImageView.image = nil
+    spinner.startAnimating()
   }
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
